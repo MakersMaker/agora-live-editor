@@ -1,0 +1,43 @@
+{
+  "name": "brokerage-viz",
+  "version": "1.0.0",
+  "description": "Visualise data from your brokerage account",
+  "main": "index.tsx",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "parcel index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/alankyshum/brokerage-viz.git"
+  },
+  "keywords": [
+    "brokerage",
+    "react",
+    "robinhood",
+    "typescript"
+  ],
+  "author": "Alan Shum",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alankyshum/brokerage-viz/issues"
+  },
+  "homepage": "https://github.com/alankyshum/brokerage-viz#readme",
+  "devDependencies": {
+    "@types/react": "^16.4.6",
+    "@types/react-dom": "^16.0.6",
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
+    "node-sass": "^4.9.2",
+    "parcel-plugin-typescript": "^1.0.0",
+    "tslint": "^5.10.0",
+    "tslint-config-airbnb": "^5.9.2",
+    "tslint-react": "^3.6.0",
+    "typescript": "^2.9.2"
+  },
+  "dependencies": {
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "styled-components": "^3.3.3"
+  }
+}

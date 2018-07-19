@@ -4,7 +4,11 @@
     "module": "commonjs",
     "strict": true,
     "jsx": "react",
+    "sourceMap": true,
     "experimentalDecorators": true,
     "lib": ["dom", "es2015"]
-  }
+  },
+  "exclude": [
+    "node_modules"
+  ]
 }

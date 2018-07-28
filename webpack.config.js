@@ -20,6 +20,9 @@ module.exports = {
       }
     ]
   },
+  plugins: [
+    new MonacoWebpackPlugin()
+  ],
   resolve: {
     extensions: [".jsx", ".js"]
   },
@@ -33,8 +36,5 @@ module.exports = {
         path.resolve(__dirname, 'node_modules')
       ]
     },
-  },
-  plugins: [
-    new MonacoWebpackPlugin()
-  ]
+  }
 };

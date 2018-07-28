@@ -1,4 +1,5 @@
 const path = require('path');
+const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 
 module.exports = {
   entry: path.join(__dirname, 'index.jsx'),
@@ -10,7 +11,7 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
-        use: ['file-loader']
+        use: ['style-loader', 'css-loader']
       },
       {
         test: /\.jsx?$/,
@@ -32,5 +33,8 @@ module.exports = {
         path.resolve(__dirname, 'node_modules')
       ]
     },
-  }
+  },
+  plugins: [
+    new MonacoWebpackPlugin()
+  ]
 };

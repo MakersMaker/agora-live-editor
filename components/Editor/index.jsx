@@ -28,7 +28,7 @@ export default class Editor extends React.Component {
 
   render() {
     return <Paper elevation={1}>
-      { this.state.file.name }
+      Current File: { this.state.file.name }
       <div style={{ height: 'calc(100vh - 30px)' }} ref={ this.editorDOM }></div>
     </Paper>;
   }
@@ -59,6 +59,7 @@ export default class Editor extends React.Component {
     const language = extname(fileName).split('.')[1];
     const rawResponse = await fetch(`${server.host}/files/${fileName}`);
     const fileContent = await rawResponse.text();
+    if (!language) return;
     this.updateContent(fileContent);
     this.updateLanguage(language);
   }

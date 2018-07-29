@@ -61,6 +61,7 @@ export default class FileTree extends React.Component {
     if(node.children){ node.toggled = toggled; }
     this.setState({ cursor: node });
     this.setState({ activeFile: node.path })
+    this.props.switchFile(node.path);
   }
 
   render(){

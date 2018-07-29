@@ -8,11 +8,15 @@ export default class Content extends React.Component {
   }
   render() {
     return <Grid item xs={9}>
-      <button onClick={ () => this.switchFile('another.json') }>Change File</button>
-      <Editor fileName={ this.state.file.name }></Editor>
+      <Editor fileName={ this.parseFileName(this.props.activeFileName) }></Editor>
     </Grid>
   }
+
   switchFile(fileName) {
     this.setState({ file: { name: fileName } });
+  }
+
+  parseFileName(fileName) {
+    return fileName.replace(/public\/files\//, '');
   }
 }

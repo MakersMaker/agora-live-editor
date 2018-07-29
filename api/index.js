@@ -30,7 +30,7 @@ app.post('/files', (req, res) => {
   });
 });
 
-app.listen(8082);
+app.listen(process.env.PORT + 1 || 8082);
 console.log('Server listening at port 8082');
 
 function getFileTree(dir) {

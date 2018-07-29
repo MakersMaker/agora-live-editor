@@ -29,7 +29,7 @@ module.exports = {
   devServer: {
     contentBase: __dirname,
     watchContentBase: true,
-    port: process.env.PORT,
+    port: process.env.PORT || 8081,
     watchOptions: {
       poll: true,
       ignored: [

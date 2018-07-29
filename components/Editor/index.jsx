@@ -2,8 +2,8 @@ import * as React from 'react';
 import Paper from '@material-ui/core/Paper';
 import * as monaco from 'monaco-editor';
 import debounce from 'debounce';
-import { server } from '../config';
 import { extname } from 'path';
+import { Agora, server } from '../config';
 import { style } from '../config';
 
 export default class Editor extends React.Component {
@@ -13,6 +13,10 @@ export default class Editor extends React.Component {
     file: {
       name: '',
     },
+  }
+
+  agora = {
+    signal: null
   }
 
   editor = null;
@@ -35,6 +39,7 @@ export default class Editor extends React.Component {
     });
     this.switchFile(this.state.file.name);
     this.registerContentListener(this.editor);
+    this.registerAgoraClient();
   }
 
   componentDidUpdate() {
@@ -67,6 +72,7 @@ export default class Editor extends React.Component {
     const typing = (e) => {
       const content = editor.getModel().getValue();
       this.updateFile(this.state.file.name, content);
+      this.broadcastFile(this.state.file.name, content);
     }
 
     window.onkeyup = debounce(typing, 500);
@@ -84,6 +90,33 @@ export default class Editor extends React.Component {
       },
       body: postBody
     });
+  }
+
+  broadcastFile(fileName, content) {
+    if (!this.agora.channel) return;
+    this.agora.channel.messageChannelSend(JSON.stringify({ fileName, content }));
+  }
+
+  registerAgoraClient() {
+    const agoraCred = Agora.generateToken(`${Math.round(Math.random() * 100)}@randomname.com`);
+    this.agora.signal = Signal(agoraCred.appId);
+    this.agora.session = this.agora.signal.login(agoraCred.account, agoraCred.token)
+    this.agora.session.onLoginSuccess = (uid) => {
+      this.agora.uid = uid;
+      this.agora.channel = this.agora.session.channelJoin(server.agoraChannelName);
+      this.agora.channel.onChannelJoined = () => {
+        console.log(`Joined Agora Channel: ${server.agoraChannelName} with uid ${uid}`);
+
+        this.agora.channel.onMessageChannelReceive = (account, senderUID, msg) => {
+          const messageBody = JSON.parse(msg);
+          const fromOtherSender = senderUID !== uid;
+          if (this.state.file.name === messageBody.fileName && fromOtherSender) {
+            // idea: switch file
+            this.updateContent(messageBody.content);
+          }
+        }
+      }
+    };
   }
 
   updateLanguage(language) {

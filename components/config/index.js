@@ -2,6 +2,7 @@ import md5 from 'md5';
 
 export const server = {
   host: 'http://localhost:8082',
+  agoraChannelName: 'angelHack-makermaker'
 };
 
 export const style = {

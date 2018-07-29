@@ -18,7 +18,7 @@ export default class Content extends React.Component {
           <Tab disableRipple label={ fileName } />
         </Tabs>
       </AppBar>
-      <Editor fileName={ fileName }></Editor>
+      <Editor fileName={ fileName } updateFile={ this.props.updateFile } ></Editor>
     </Grid>
   }
 

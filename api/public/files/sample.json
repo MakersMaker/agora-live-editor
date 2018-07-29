@@ -1,9 +1,10 @@
 {
     "asdqwee": {
         "asdasd": "AWEAWE",
-        "qweqweqweqwe": [3, 2, 1]
+        "qweqweqweqwe": [3, 2, 1],
         "asdasdasd": {
-            "asdasd"
+            "asdasd": "asdasd",
+            "asdasd": 123123
         }
     }
 }

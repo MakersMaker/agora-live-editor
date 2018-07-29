@@ -1,59 +1,28 @@
 import * as React from 'react';
-import MonacoEditor from 'react-monaco-editor';
+import Paper from '@material-ui/core/Paper';
+import * as monaco from 'monaco-editor';
 
 export default class Editor extends React.Component {
+  state = {
+    code: '// type your code... \n',
+    language: 'javascript'
+  }
+
   constructor(props) {
     super(props);
-    this.state = {
-      code: '// type your code... \n',
-    }
+    this.editor = React.createRef();
   }
 
-  onChange = (newValue, e) => {
-    console.log('onChange', newValue, e); // eslint-disable-line no-console
-  }
-
-  editorDidMount = (editor) => {
-    // eslint-disable-next-line no-console
-    console.log('editorDidMount', editor, editor.getValue(), editor.getModel());
-    this.editor = editor;
-  }
-
-  changeEditorValue = () => {
-    if (this.editor) {
-      this.editor.setValue('// code changed! \n');
-    }
-  }
-
-  changeBySetState = () => {
-    this.setState({ code: '// code changed by setState! \n' });
+  componentDidMount() {
+    monaco.editor.create(this.editor.current, {
+      value: this.state.code,
+      language: this.state.language
+    });
   }
 
   render() {
-    const { code } = this.state;
-    const options = {
-      selectOnLineNumbers: true,
-      roundedSelection: false,
-      readOnly: false,
-      cursorStyle: 'line',
-      automaticLayout: false,
-    };
-    return (
-      <div>
-        <div>
-          <button onClick={this.changeEditorValue}>Change value</button>
-          <button onClick={this.changeBySetState}>Change by setState</button>
-        </div>
-        <hr />
-        <MonacoEditor
-          height="500"
-          language="javascript"
-          value={code}
-          options={options}
-          onChange={this.onChange}
-          editorDidMount={this.editorDidMount}
-        />
-      </div>
-    );
+    return <Paper elevation={1}>
+      <div style={{ height: '100%' }} ref={this.editor}></div>
+    </Paper>;
   }
 }

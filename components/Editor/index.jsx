@@ -35,7 +35,8 @@ export default class Editor extends React.Component {
   componentDidMount() {
     this.editor = monaco.editor.create(this.editorDOM.current, {
       value: this.state.content,
-      language: this.state.language
+      language: this.state.language,
+      automaticLayout: true
     });
     this.switchFile(this.state.file.name);
     this.registerContentListener(this.editor);

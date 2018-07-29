@@ -36,7 +36,8 @@ const data = {
 
 export default class FileTree extends React.Component {
   state = {
-    fileTree: {}
+    fileTree: {},
+    activeFile: ''
   }
 
   constructor(props){
@@ -59,14 +60,16 @@ export default class FileTree extends React.Component {
     node.active = true;
     if(node.children){ node.toggled = toggled; }
     this.setState({ cursor: node });
+    this.setState({ activeFile: node.path })
   }
 
   render(){
       return (
         <Grid item xs={3}>
+          { this.state.activeFile }
           <Treebeard
-            data={this.state.fileTree}
-            onToggle={this.onToggle}
+            data={ this.state.fileTree }
+            onToggle={ this.onToggle }
           />
         </Grid>
       );

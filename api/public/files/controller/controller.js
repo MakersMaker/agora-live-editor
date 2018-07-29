@@ -39,6 +39,25 @@ export default class Editor extends React.Component {
     this.switchFile(this.state.file.name);
   }
 
+  updateLanguage(language) {
+    const model = this.editor.getModel();
+    monaco.editor.setModelLanguage(model, language);
+  }
+
+  updateContent(newContent) {
+    const model = this.editor.getModel();
+    model.setValue(newContent);
+  }
+
+  async switchFile(fileName) {
+    const language = extname(fileName).split('.')[1];
+    const rawResponse = await fetch(`${server.host}/files/${fileName}`);
+    const fileContent = await rawResponse.text();
+    if (!language) return;
+    this.updateContent(fileContent);
+    this.updateLanguage(language);
+  }
+
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.fileName !== prevState.file.name) {
       return {
@@ -50,31 +69,5 @@ export default class Editor extends React.Component {
     }
 
     return null;
-  }
-
-  async switchFile(fileName) {
-    const language = this.parseLanguage(fileName);
-    const rawResponse = await fetch(`${server.host}/files/${fileName}`);
-    const fileContent = await rawResponse.text();
-    if (!language) return;
-    this.updateContent(fileContent);
-    this.updateLanguage(language);
-  }
-
-  updateLanguage(language) {
-    const model = this.editor.getModel();
-    monaco.editor.setModelLanguage(model, language);
-  }
-
-  updateContent(newContent) {
-    const model = this.editor.getModel();
-    model.setValue(newContent);
-  }
-
-  parseLanguage(fileName) {
-    const ext = extname(fileName).split('.')[1];
-    return {
-      js: 'javascript',
-    }[ext] || ext;
   }
 }

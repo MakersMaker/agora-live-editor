@@ -21,7 +21,18 @@ export default class FileTree extends React.Component {
 
   async getFiles() {
     const rawFileTreeRes = await fetch(`${server.host}/files`);
-    return rawFileTreeRes.json();
+    const tree = await rawFileTreeRes.json();;
+    if (!this.props.expanded) return tree;
+    return this.recursiveToggledTree(tree, true);
+  }
+
+  recursiveToggledTree(tree, toggled) {
+    tree.toggled = toggled;
+    if (!tree.children) return tree;
+    tree.children.forEach(child => {
+      this.recursiveToggledTree(child, toggled);
+    });
+    return tree;
   }
 
   onToggle(node, toggled){
@@ -34,7 +45,7 @@ export default class FileTree extends React.Component {
   }
 
   render() {
-    theme.tree.base = { ...theme.tree.base, height: style.page.height };
+    theme.tree.base = { ...theme.tree.base, height: '100vh' };
 
     return (
       <Grid item xs={3}>

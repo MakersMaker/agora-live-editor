@@ -18,7 +18,7 @@ export default class Dashboard extends React.Component {
   render() {
     return <>
       <Grid container>
-        <FileTree switchFile={ this.switchFile.bind(this) }></FileTree>
+        <FileTree switchFile={ this.switchFile.bind(this) } expanded={ true }></FileTree>
         <Content activeFileName={ this.state.activeFileName } ></Content>
       </Grid>
     </>;

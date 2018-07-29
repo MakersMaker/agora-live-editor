@@ -4,6 +4,6 @@ export const server = {
 
 export const style = {
   page: {
-    height: 'calc(100vh - 100px)'
+    height: 'calc(100vh - 48px)'
   }
 }

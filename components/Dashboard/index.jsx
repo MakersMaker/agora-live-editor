@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Grid from '@material-ui/core/Grid';
+import { extname } from 'path';
 import FileTree from '../FileTree';
 import Content from '../Content';
 
@@ -9,6 +10,8 @@ export default class Dashboard extends React.Component {
   }
 
   switchFile(activeFileName) {
+    const ext = extname(activeFileName);
+    if (!ext) return;
     this.setState({ activeFileName })
   }
 

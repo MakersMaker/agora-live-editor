@@ -1,19 +1,25 @@
 import * as React from 'react';
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 import Grid from '@material-ui/core/Grid';
 import Editor from '../Editor';
 
 export default class Content extends React.Component {
   state = {
-    file: { name: 'sample.json' }
+    file: { name: 'sample.json', activeTab: 0 },
   }
   render() {
-    return <Grid item xs={9}>
-      <Editor fileName={ this.parseFileName(this.props.activeFileName) }></Editor>
-    </Grid>
-  }
+    const fileName = this.parseFileName(this.props.activeFileName);
 
-  switchFile(fileName) {
-    this.setState({ file: { name: fileName } });
+    return <Grid item xs={9}>
+      <AppBar position="static">
+        <Tabs value={ this.state.file.activeTab } >
+          <Tab disableRipple label={ fileName } />
+        </Tabs>
+      </AppBar>
+      <Editor fileName={ fileName }></Editor>
+    </Grid>
   }
 
   parseFileName(fileName) {

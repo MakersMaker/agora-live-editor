@@ -1,14 +1,8 @@
 import * as React from 'react';
-import styled from 'styled-components';
 import Paper from '@material-ui/core/Paper';
 import * as monaco from 'monaco-editor';
 import { server } from '../config';
 import { extname } from 'path';
-
-const EditorWrapper = styled.div`
-  height: 100vh;
-  background-color: #000;
-`;
 
 export default class Editor extends React.Component {
   state = {
@@ -28,7 +22,6 @@ export default class Editor extends React.Component {
 
   render() {
     return <Paper elevation={1}>
-      Current File: { this.state.file.name }
       <div style={{ height: 'calc(100vh - 30px)' }} ref={ this.editorDOM }></div>
     </Paper>;
   }

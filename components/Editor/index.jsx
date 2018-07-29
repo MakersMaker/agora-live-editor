@@ -3,6 +3,7 @@ import Paper from '@material-ui/core/Paper';
 import * as monaco from 'monaco-editor';
 import { server } from '../config';
 import { extname } from 'path';
+import { style } from '../config';
 
 export default class Editor extends React.Component {
   state = {
@@ -22,7 +23,7 @@ export default class Editor extends React.Component {
 
   render() {
     return <Paper elevation={1}>
-      <div style={{ height: 'calc(100vh - 30px)' }} ref={ this.editorDOM }></div>
+      <div style={ style.page } ref={ this.editorDOM }></div>
     </Paper>;
   }
 

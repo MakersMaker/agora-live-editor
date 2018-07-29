@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Grid from '@material-ui/core/Grid';
 import { Treebeard } from 'react-treebeard';
+import { server } from '../config';
 
 const data = {
   name: 'root',
@@ -34,22 +35,37 @@ const data = {
 };
 
 export default class FileTree extends React.Component {
+  state = {
+    fileTree: {}
+  }
+
   constructor(props){
     super(props);
-    this.state = {};
     this.onToggle = this.onToggle.bind(this);
   }
+
+  async componentDidMount() {
+    const fileTree = await this.getFiles();
+    this.setState({ fileTree });
+  }
+
+  async getFiles() {
+    const rawFileTreeRes = await fetch(`${server.host}/files`);
+    return rawFileTreeRes.json();
+  }
+
   onToggle(node, toggled){
     if(this.state.cursor){this.state.cursor.active = false;}
     node.active = true;
     if(node.children){ node.toggled = toggled; }
     this.setState({ cursor: node });
   }
+
   render(){
       return (
         <Grid item xs={3}>
           <Treebeard
-            data={data}
+            data={this.state.fileTree}
             onToggle={this.onToggle}
           />
         </Grid>

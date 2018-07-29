@@ -1,5 +1,5 @@
 {
-  "name": "brokerage-viz",
+  "name": "agora-live-editor",
   "version": "1.0.0",
   "description": "Visualise data from your brokerage account",
   "main": "index.jsx",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/alankyshum/brokerage-viz.git"
+    "url": "git+ssh://git@github.com/alankyshum/agora-live-editor.git"
   },
   "keywords": [
     "brokerage",
@@ -20,9 +20,9 @@
   "author": "Alan Shum",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/alankyshum/brokerage-viz/issues"
+    "url": "https://github.com/alankyshum/agora-live-editor/issues"
   },
-  "homepage": "https://github.com/alankyshum/brokerage-viz#readme",
+  "homepage": "https://github.com/alankyshum/agora-live-editor#readme",
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.54",
     "@babel/core": "^7.0.0-beta.54",

@@ -26,6 +26,7 @@
     "@babel/cli": "^7.0.0-beta.54",
     "@babel/core": "^7.0.0-beta.54",
     "@babel/plugin-proposal-class-properties": "^7.0.0-beta.55",
+    "@babel/plugin-transform-runtime": "^7.0.0-beta.55",
     "@babel/preset-env": "^7.0.0-beta.54",
     "@babel/preset-react": "^7.0.0-beta.54",
     "babel-loader": "^8.0.0-beta",
@@ -41,9 +42,11 @@
   "dependencies": {
     "@material-ui/core": "^1.4.1",
     "@material-ui/icons": "^2.0.0",
+    "express": "^4.16.3",
     "monaco-editor": "^0.13.1",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
+    "react-treebeard": "^2.1.0",
     "styled-components": "^3.3.3"
   }
 }

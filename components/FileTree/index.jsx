@@ -20,8 +20,8 @@ export default class FileTree extends React.Component {
   }
 
   async getFiles() {
-    const rawFileTreeRes = await fetch(`${server.host}/files`);
-    const tree = await rawFileTreeRes.json();;
+    const rawFileTreeRes = await fetch(`${server.host}/filestree`);
+    const tree = await rawFileTreeRes.json();
     if (!this.props.expanded) return tree;
     return this.recursiveToggledTree(tree, true);
   }

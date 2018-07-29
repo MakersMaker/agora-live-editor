@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Paper from '@material-ui/core/Paper';
 import * as monaco from 'monaco-editor';
+import debounce from 'debounce';
 import { server } from '../config';
 import { extname } from 'path';
 import { style } from '../config';
@@ -33,6 +34,7 @@ export default class Editor extends React.Component {
       language: this.state.language
     });
     this.switchFile(this.state.file.name);
+    this.registerContentListener(this.editor);
   }
 
   componentDidUpdate() {
@@ -59,6 +61,29 @@ export default class Editor extends React.Component {
     if (!language) return;
     this.updateContent(fileContent);
     this.updateLanguage(language);
+  }
+
+  registerContentListener(editor) {
+    const typing = (e) => {
+      const content = editor.getModel().getValue();
+      this.updateFile(this.state.file.name, content);
+    }
+
+    window.onkeyup = debounce(typing, 500);
+  }
+
+  async updateFile(fileName, content) {
+    const postBody = JSON.stringify({
+      fileName, content
+    });
+    const doneResponse = await fetch(`${server.host}/files`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: postBody
+    });
   }
 
   updateLanguage(language) {

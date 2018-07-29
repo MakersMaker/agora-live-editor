@@ -12,10 +12,10 @@ const EditorWrapper = styled.div`
 
 export default class Editor extends React.Component {
   state = {
-    code: '// type your code... \n',
+    content: '// type your code... \n',
     language: 'javascript',
     file: {
-      name: this.props.fileName,
+      name: '',
     },
   }
 
@@ -23,14 +23,25 @@ export default class Editor extends React.Component {
 
   constructor(props) {
     super(props);
-    this.editor = React.createRef();
+    this.editorDOM = React.createRef();
   }
 
-  async componentDidMount() {
-    this.editor = monaco.editor.create(this.editor.current, {
-      value: this.state.code,
+  render() {
+    return <Paper elevation={1}>
+      { this.state.file.name }
+      <div style={{ height: 'calc(100vh - 30px)' }} ref={ this.editorDOM }></div>
+    </Paper>;
+  }
+
+  componentDidMount() {
+    this.editor = monaco.editor.create(this.editorDOM.current, {
+      value: this.state.content,
       language: this.state.language
     });
+    this.switchFile(this.state.file.name);
+  }
+
+  componentDidUpdate() {
     this.switchFile(this.state.file.name);
   }
 
@@ -52,9 +63,16 @@ export default class Editor extends React.Component {
     this.updateLanguage(language);
   }
 
-  render() {
-    return <Paper elevation={1}>
-      <div style={{ height: 'calc(100vh - 30px)' }} ref={this.editor}></div>
-    </Paper>;
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.fileName !== prevState.file.name) {
+      return {
+        ...prevState,
+        file: {
+          name: nextProps.fileName
+        }
+      };
+    }
+
+    return null;
   }
 }

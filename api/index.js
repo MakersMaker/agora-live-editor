@@ -1,6 +1,10 @@
 const express = require('express');
+const cors = require('cors');
 
 app = express();
+
+app.use(cors());
 app.use(express.static('./public'));
-console.log('Server listening at port 8082');
 app.listen(8082);
+
+console.log('Server listening at port 8082');

@@ -4,8 +4,9 @@
   "description": "Visualise data from your brokerage account",
   "main": "index.jsx",
   "scripts": {
-    "start": "webpack-dev-server --mode development",
-    "build": "webpack"
+    "dev": "webpack-dev-server --mode development",
+    "build": "webpack",
+    "start": "cd api && npm start"
   },
   "repository": {
     "type": "git",

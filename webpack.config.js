@@ -5,7 +5,8 @@ module.exports = {
   entry: path.join(__dirname, 'index.jsx'),
   output: {
     filename: 'index.js',
-    path: __dirname
+    path: path.join(__dirname, 'api', 'public', 'js'),
+    publicPath: 'js/'
   },
   module: {
     rules: [

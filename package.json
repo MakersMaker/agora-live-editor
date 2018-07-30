@@ -5,8 +5,7 @@
   "main": "index.jsx",
   "scripts": {
     "start": "webpack-dev-server --mode development",
-    "build": "webpack",
-    "serve": "cd api && npm start"
+    "build": "webpack"
   },
   "repository": {
     "type": "git",

@@ -36,5 +36,6 @@ module.exports = {
         path.resolve(__dirname, 'node_modules')
       ]
     },
+    host: '0.0.0.0',
   }
 };

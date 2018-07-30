@@ -40,7 +40,8 @@
     "style-loader": "^0.21.0",
     "webpack": "^4.16.1",
     "webpack-cli": "^3.0.8",
-    "webpack-dev-server": "^3.1.4"
+    "webpack-dev-server": "^3.1.4",
+    "nodemon": "^1.18.3"
   },
   "dependencies": {
     "@material-ui/core": "^1.4.1",
@@ -53,6 +54,9 @@
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-treebeard": "^2.1.0",
-    "styled-components": "^3.3.3"
+    "styled-components": "^3.3.3",
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
+    "directory-tree": "^2.1.0"
   }
 }

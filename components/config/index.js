@@ -1,10 +1,10 @@
 import md5 from 'md5';
 
-const port = process.env.PORT || 8002;
+const port = process.env.PORT || 8082;
 
 export const server = {
   port,
-  host: `${window.location.protocol}//${window.location.hostname}:${port}`,
+  host: '',
   agoraChannelName: 'angelHack-makermaker'
 };
 

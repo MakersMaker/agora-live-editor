@@ -22,7 +22,7 @@ app.get('/filestree', (req, res) => {
 
 app.post('/files', (req, res) => {
   const postBody = req.body;
-  console.log(postBody);
+  console.log(postBody.fileName);
 
   if (!postBody.fileName) return res.send({ done: false });
   const filePath = path.join(config.filesPath, postBody.fileName);

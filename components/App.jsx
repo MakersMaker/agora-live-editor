@@ -3,6 +3,7 @@ import {BrowserRouter, Route, Link} from 'react-router-dom';
 import { extname } from 'path';
 import FileTree from './FileTree';
 import Content from './Content'
+import Button from '@material-ui/core/Button';
 
 export default class App extends React.Component {
     state = {
@@ -13,10 +14,12 @@ export default class App extends React.Component {
     return <>
       <BrowserRouter>
           <div>
-              <li>
+              <Button color="primary" >
                   <Link to ="/content">Content</Link>
+              </Button>
+              <Button color="primary">
                   <Link to ="/filetree">Directory</Link>
-              </li>
+              </Button>
               <div>
                   <Route path = "/content" component = { this.editor } />
                   <Route path = "/filetree" component = { this.file} />

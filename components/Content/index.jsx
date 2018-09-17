@@ -12,7 +12,7 @@ export default class Content extends React.Component {
   render() {
     const fileName = this.parseFileName(this.props.activeFileName);
 
-    return <Grid item xs={9}>
+    return <Grid item xs={12}>
       <AppBar position="static">
         <Tabs value={ this.state.file.activeTab } >
           <Tab disableRipple label={ fileName } />

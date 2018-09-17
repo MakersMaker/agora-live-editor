@@ -28,6 +28,7 @@ module.exports = {
     extensions: [".jsx", ".js"]
   },
   devServer: {
+    historyApiFallback : true,
     contentBase: __dirname,
     watchContentBase: true,
     port: process.env.PORT,

@@ -5,6 +5,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const fs = require('fs');
 
+
 const config = {
   filesPath: './public/files'
 }
@@ -30,8 +31,15 @@ app.post('/files', (req, res) => {
   });
 });
 
-app.listen(process.env.PORT || 8082);
+const server = app.listen(process.env.PORT || 8082);
+const io = require('socket.io')(server);
 console.log('Server listening at port 8082');
+
+io.on('connection' , (socket)=>{
+  socket.on('send', (data)=>{
+    socket.broadcast.emit('recive', data);
+  })
+})
 
 function getFileTree(dir) {
   return dirTree(dir);

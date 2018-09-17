@@ -8,7 +8,7 @@ const fs = require('fs');
 
 const config = {
   filesPath: './public/files'
-}
+};
 
 app = express();
 app.use(cors());
@@ -39,7 +39,7 @@ io.on('connection' , (socket)=>{
   socket.on('send', (data)=>{
     socket.broadcast.emit('recive', data);
   })
-})
+});
 
 function getFileTree(dir) {
   return dirTree(dir);

@@ -46,7 +46,6 @@
   "dependencies": {
     "@material-ui/core": "^1.4.1",
     "@material-ui/icons": "^2.0.0",
-    "agora-signaling-sdk": "^1.3.3",
     "body-parser": "^1.18.3",
     "cors": "^2.8.4",
     "debounce": "^1.1.0",

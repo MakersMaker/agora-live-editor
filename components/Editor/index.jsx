@@ -16,7 +16,7 @@ export default class Editor extends React.Component {
     },
   }
 
-  socket  = io.connect('http://localhost:8082', { reconnect: false });
+  socket  = io();
 
   editor = null;
 

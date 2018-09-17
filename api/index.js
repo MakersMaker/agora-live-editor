@@ -5,9 +5,10 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const fs = require('fs');
 
+
 const config = {
   filesPath: './public/files'
-}
+};
 
 app = express();
 app.use(cors());
@@ -21,7 +22,7 @@ app.get('/filestree', (req, res) => {
 
 app.post('/files', (req, res) => {
   const postBody = req.body;
-  console.log(postBody);
+  console.log(postBody.fileName);
 
   if (!postBody.fileName) return res.send({ done: false });
   const filePath = path.join(config.filesPath, postBody.fileName);
@@ -30,8 +31,15 @@ app.post('/files', (req, res) => {
   });
 });
 
-app.listen(process.env.PORT || 8082);
+const server = app.listen(process.env.PORT || 8082);
+const io = require('socket.io')(server);
 console.log('Server listening at port 8082');
+
+io.on('connection' , (socket)=>{
+  socket.on('send', (data)=>{
+    socket.broadcast.emit('recive', data);
+  })
+});
 
 function getFileTree(dir) {
   return dirTree(dir);

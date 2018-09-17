@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Grid from '@material-ui/core/Grid';
 import { extname } from 'path';
-import 'agora-signaling-sdk'; // exposed as window.Signal()
 import FileTree from '../FileTree';
 import Content from '../Content';
 

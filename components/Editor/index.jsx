@@ -3,8 +3,9 @@ import Paper from '@material-ui/core/Paper';
 import * as monaco from 'monaco-editor';
 import debounce from 'debounce';
 import { extname } from 'path';
-import { Agora, server } from '../config';
+import { server } from '../config';
 import { style } from '../config';
+import io from 'socket.io-client';
 
 export default class Editor extends React.Component {
   state = {
@@ -15,9 +16,7 @@ export default class Editor extends React.Component {
     },
   }
 
-  agora = {
-    signal: null
-  }
+  socket  = io();
 
   editor = null;
 
@@ -40,7 +39,7 @@ export default class Editor extends React.Component {
     });
     this.switchFile(this.state.file.name);
     this.registerContentListener(this.editor);
-    this.registerAgoraClient();
+    this.socketRecive();
   }
 
   componentDidUpdate() {
@@ -94,30 +93,19 @@ export default class Editor extends React.Component {
   }
 
   broadcastFile(fileName, content) {
-    if (!this.agora.channel) return;
-    this.agora.channel.messageChannelSend(JSON.stringify({ fileName, content }));
+    console.log("broadcastFile");
+    this.socket.emit('send',(JSON.stringify({fileName,content})));
   }
 
-  registerAgoraClient() {
-    const agoraCred = Agora.generateToken(`${Math.round(Math.random() * 100)}@randomname.com`);
-    this.agora.signal = Signal(agoraCred.appId);
-    this.agora.session = this.agora.signal.login(agoraCred.account, agoraCred.token)
-    this.agora.session.onLoginSuccess = (uid) => {
-      this.agora.uid = uid;
-      this.agora.channel = this.agora.session.channelJoin(server.agoraChannelName);
-      this.agora.channel.onChannelJoined = () => {
-        console.log(`Joined Agora Channel: ${server.agoraChannelName} with uid ${uid}`);
-
-        this.agora.channel.onMessageChannelReceive = (account, senderUID, msg) => {
-          const messageBody = JSON.parse(msg);
-          const fromOtherSender = senderUID !== uid;
-          if (this.state.file.name === messageBody.fileName && fromOtherSender) {
-            // idea: switch file
-            this.updateContent(messageBody.content);
-          }
-        }
+  socketRecive() {
+    console.log("socketRecive");
+    this.socket.on('recive',(data)=>{
+      console.log("update");
+      const messageBody = JSON.parse(data);
+      if(this.state.file.name === messageBody.fileName){
+        this.updateContent(messageBody.content);
       }
-    };
+    })
   }
 
   updateLanguage(language) {

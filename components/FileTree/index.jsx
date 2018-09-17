@@ -48,7 +48,7 @@ export default class FileTree extends React.Component {
     theme.tree.base = { ...theme.tree.base, height: '100vh' };
 
     return (
-      <Grid item xs={3}>
+      <Grid item xs={12}>
         <Treebeard
           style={ theme }
           data={ this.state.fileTree }

@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
-const dirTree = require('directory-tree');
 const path = require('path');
+const dirTree = require('directory-tree');
 const bodyParser = require('body-parser');
 const fs = require('fs');
 
@@ -12,8 +12,12 @@ const config = {
 
 app = express();
 app.use(cors());
-app.use(express.static('./public'));
+app.use(express.static( './public'));
 app.use(bodyParser.json());
+
+app.set('views', __dirname + '/public');
+app.engine('html', require('ejs').renderFile);
+
 
 app.get('/filestree', (req, res) => {
   const files = getFileTree(config.filesPath);
@@ -31,14 +35,21 @@ app.post('/files', (req, res) => {
   });
 });
 
-const server = app.listen(process.env.PORT || 8082);
+app.get('/lecturePage' , (req,res)=>{
+  res.render('lecturePage.html');
+})
+
+const server = app.listen(process.env.PORT || 8081);
 const io = require('socket.io')(server);
-console.log('Server listening at port 8082');
+console.log('Server listening at port 8081');
 
 io.on('connection' , (socket)=>{
-  socket.on('send', (data)=>{
-    socket.broadcast.emit('recive', data);
-  })
+  socket.on('codeSend', (data)=>{
+    socket.broadcast.emit('codeRecive', data);
+  });
+  // socket.on('messageSend' , (data)=>{
+  //   socket.broadcast.emit('messageRecive', data);
+  // });
 });
 
 function getFileTree(dir) {

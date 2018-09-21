@@ -1,9 +1,8 @@
-const port = process.env.PORT || 8082;
+const port = process.env.PORT || 8081;
 
 export const server = {
   port,
   host: '',
-  agoraChannelName: 'angelHack-makermaker'
 };
 
 export const style = {

@@ -21,6 +21,7 @@ export default class App extends React.Component {
                   <Link to ="/filetree">Directory</Link>
               </Button>
               <div>
+                  <Route exact path = "/" component = { this.editor } />
                   <Route path = "/content" component = { this.editor } />
                   <Route path = "/filetree" component = { this.file} />
               </div>

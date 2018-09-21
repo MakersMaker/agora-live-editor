@@ -94,12 +94,12 @@ export default class Editor extends React.Component {
 
   broadcastFile(fileName, content) {
     console.log("broadcastFile");
-    this.socket.emit('send',(JSON.stringify({fileName,content})));
+    this.socket.emit('codeSend',(JSON.stringify({fileName,content})));
   }
 
   socketRecive() {
     console.log("socketRecive");
-    this.socket.on('recive',(data)=>{
+    this.socket.on('codeRecive',(data)=>{
       console.log("update");
       const messageBody = JSON.parse(data);
       if(this.state.file.name === messageBody.fileName){

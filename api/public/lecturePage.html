@@ -9,25 +9,24 @@
   <meta name="Description" content="jQuery Splitter Demo" />
   <link rel="shortcut icon" href="" />
 
-  <link href="../node_modules/jquery.splitter/css/jquery.splitter.css" rel="stylesheet" />
-  <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link href="assets/css/jquery.splitter.css" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
   <link rel="stylesheet" href="js/vendor/splitter/splitter.css">
-  <link rel="stylesheet" href="assets/lecturePage.css">
+  <link rel="stylesheet" href="assets/css/lecturePage.css">
 
-  <script src="js/go.js"></script>
-  <script src="../node_modules/jquery/dist/jquery.min.js"></script>
-  <script src="../node_modules/jquery.splitter/js/jquery.splitter.js"></script>
-  <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-  <script src="js/vendor/splitter/splitter.js"></script>
-
-
-  <script src="js/download.js"></script>
   <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
-  <script src="https://cdn.webrtc-experiment.com/CodecsHandler.js"></script>
-  <script src="https://cdn.webrtc-experiment.com/IceServersHandler.js"></script>
+  <script src="js/download.js"></script>
   <script src="js/meeting.js"></script>
   <script src="js/RecordRTC.js"></script>
+  <script src="https://cdn.webrtc-experiment.com/CodecsHandler.js"></script>
+  <script src="https://cdn.webrtc-experiment.com/IceServersHandler.js"></script>
   <script src="https://cdn.WebRTC-Experiment.com/getScreenId.js"></script>
+
+  <script src="js/go.js"></script>
+  <script src="js/jquery.min.js"></script>
+  <script src="js/jquery.splitter.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/vendor/splitter/splitter.js"></script>
 
   <!--[if IE]>
   <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -80,7 +79,6 @@
                     {"from": 10, "to": 11, "fromPort": "B", "toPort": "T"},
                 ]
             }
-            // 이거필요
             var $ = go.GraphObject.make;
 
 
@@ -104,28 +102,13 @@
 
             function nodeStyle() {
                 return [
-                    // The Node.location comes from the "loc" property of the node data,
-                    // converted by the Point.parse static method.
-                    // If the Node.location is changed, it updates the "loc" property of the node data,
-                    // converting back using the Point.stringify static method.
                     new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
-                    {
-                        // the Node.location is at the center of each node
-                        locationSpot: go.Spot.Center
-                    }
+                    {locationSpot: go.Spot.Center}
                 ];
             }
 
-            // Define a function for creating a "port" that is normally transparent.
-            // The "name" is used as the GraphObject.portId,
-            // the "align" is used to determine where to position the port relative to the body of the node,
-            // the "spot" is used to control how links connect with the port and whether the port
-            // stretches along the side of the node,
-            // and the boolean "output" and "input" arguments control whether the user can draw links from or to the port.
             function makePort(name, align, spot, output, input) {
                 var horizontal = align.equals(go.Spot.Top) || align.equals(go.Spot.Bottom);
-                // the port is basically just a transparent rectangle that stretches along the side of the node,
-                // and becomes colored when the mouse passes over it
                 return $(go.Shape,
                     {
                         fill: "transparent",  // changed to a color in the mouseEnter event handler
@@ -156,8 +139,6 @@
                 }
             }
 
-            // define the Node templates for regular nodes
-
             myDiagram_flowchart.nodeTemplateMap.add("",  // the default category
                 $(go.Node, "Table", nodeStyle(),
                     // the main object is a Panel that surrounds a TextBlock with a rectangular Shape
@@ -181,7 +162,6 @@
                     makePort("B", go.Spot.Bottom, go.Spot.BottomSide, true, false)
                 ));
 
-            // replace the default Link template in the linkTemplateMap
             myDiagram_flowchart.linkTemplate =
                 $(go.Link,  // the whole link panel
                     {
@@ -223,8 +203,6 @@
                     )
                 );
 
-            // Make link labels visible if coming out of a "conditional" node.
-            // This listener is called by the "LinkDrawn" and "LinkRelinked" DiagramEvents.
             function showLinkLabel(e) {
                 var label = e.subject.findObject("LABEL");
                 if (label !== null) label.visible = (e.subject.fromNode.data.figure === "Diamond");
@@ -255,7 +233,7 @@
   <header>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <a class="navbar-brand" href="#">
-        <img src="assets/top logo.png" alt="#" height="55px">
+        <img src="assets/top%20logo.png" alt="#" height="55px">
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>

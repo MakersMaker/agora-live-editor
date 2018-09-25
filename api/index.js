@@ -12,10 +12,10 @@ const config = {
 
 app = express();
 app.use(cors());
-app.use(express.static( './public'));
+app.use(express.static('./public' ));
 app.use(bodyParser.json());
 
-app.set('views', __dirname + '/public');
+app.set('views', __dirname +  '/public');
 app.engine('html', require('ejs').renderFile);
 
 

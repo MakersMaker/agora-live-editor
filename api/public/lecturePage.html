@@ -27,211 +27,61 @@
   <script src="js/jquery.splitter.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/vendor/splitter/splitter.js"></script>
+  <script src = "js/jsForLecturepage.js"></script>
 
   <!--[if IE]>
   <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
 
-  
-</head>
 
-
-
-<script id="code">
-    flag = true;
-    function init() {
-
-        if (flag) {
-            mySavedModel_flowchart = {
-                "class": "go.GraphLinksModel",
-                "linkFromPortIdProperty": "fromPort",
-                "linkToPortIdProperty": "toPort",
-                "nodeDataArray": [
-                    {"key": 0, "category": "Start", "loc": "175 0", "text": "Build ui"},
-                    {"key": 1, "loc": "175 75", "text": "expose port: '/login', '/register', '/forget'"},
-                    {
-                        "key": 2,
-                        "loc": "175 150",
-                        "text": "integrate with passport.js"
-                    },
-                    {"key": 3, "loc": "75 225", "text": "login buton behaviour"},
-                    {"key": 4, "loc": "75 300", "text": "check login"},
-                    {"key": 5, "loc": "71 375", "text": "user exists" , "category":"condition"},
-                    {"key": 6, "loc": "75 600", "text": "yes: dashbord"},
-                    {"key": 7, "loc": "140 450", "text": "no: create user"},
-                    {"key": 8, "loc": "140 525", "text": "post '/register'"},
-                    {"key": 9, "loc": "275 225", "text": "forget password button behaviour"},
-                    {"key": 10, "loc": "275 300", "text": "post '/forget'"},
-                    {"key": 11, "loc": "275 375", "text": "send email to user's email"},
-                ],
-                "linkDataArray": [
-                    {"from": 0, "to": 1, "fromPort": "B", "toPort": "T", },
-                    {"from": 1, "to": 2, "fromPort": "B", "toPort": "T", },
-                    {"from": 2, "to": 3, "fromPort": "B", "toPort": "T"},
-                    {"from": 2, "to": 9, "fromPort": "B", "toPort": "T"},
-                    {"from": 3, "to": 4, "fromPort": "B", "toPort": "T"},
-                    {"from": 4, "to": 5, "fromPort": "B", "toPort": "T"},
-                    {"from": 5, "to": 6, "fromPort": "B", "toPort": "T"},
-                    {"from": 5, "to": 7, "fromPort": "B", "toPort": "T"},
-                    {"from": 7, "to": 8, "fromPort": "B", "toPort": "T"},
-                    {"from": 8, "to": 6, "fromPort": "B", "toPort": "T"},
-                    {"from": 9, "to": 10, "fromPort": "B", "toPort": "T"},
-                    {"from": 10, "to": 11, "fromPort": "B", "toPort": "T"},
-                ]
-            }
-            var $ = go.GraphObject.make;
-
-
-            myDiagram_flowchart =
-                $(go.Diagram, "myDiagramDiv_flowchart",  // must name or refer to the DIV HTML element
-                    {
-                        initialContentAlignment: go.Spot.Center,
-                        allowDrop: false,  // must be true to accept drops from the Palette
-                        "LinkDrawn": showLinkLabel,  // this DiagramEvent listener is defined below
-                        "LinkRelinked": showLinkLabel,
-                        scrollsPageOnFocus: false,
-                        "undoManager.isEnabled": false, // enable undo & redo
-                        "commandHandler.copiesTree": false,
-                        "commandHandler.deletesTree": false,
-                        "draggingTool.dragsTree": false,
-                    });
-
-
-
-            // helper definitions for node templates
-
-            function nodeStyle() {
-                return [
-                    new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
-                    {locationSpot: go.Spot.Center}
-                ];
-            }
-
-            function makePort(name, align, spot, output, input) {
-                var horizontal = align.equals(go.Spot.Top) || align.equals(go.Spot.Bottom);
-                return $(go.Shape,
-                    {
-                        fill: "transparent",  // changed to a color in the mouseEnter event handler
-                        strokeWidth: 0,  // no stroke
-                        width: horizontal ? NaN : 8,  // if not stretching horizontally, just 8 wide
-                        height: !horizontal ? NaN : 8,  // if not stretching vertically, just 8 tall
-                        alignment: align,  // align the port on the main Shape
-                        stretch: (horizontal ? go.GraphObject.Horizontal : go.GraphObject.Vertical),
-                        portId: name,  // declare this object to be a "port"
-                        fromSpot: spot,  // declare where links may connect at this port
-                        fromLinkable: output,  // declare whether the user may draw links from here
-                        toSpot: spot,  // declare where links may connect at this port
-                        toLinkable: input,  // declare whether the user may draw links to here
-                        cursor: "pointer",  // show a different cursor to indicate potential link point
-                        mouseEnter: function (e, port) {  // the PORT argument will be this Shape
-                            if (!e.diagram.isReadOnly) port.fill = "rgba(255,0,255,0.5)";
-                        },
-                        mouseLeave: function (e, port) {
-                            port.fill = "transparent";
-                        }
-                    });
-            }
-
-            function textStyle() {
-                return {
-                    font: "bold 10pt Helvetica, Arial, sans-serif",
-                    stroke: "whitesmoke"
-                }
-            }
-
-            myDiagram_flowchart.nodeTemplateMap.add("",  // the default category
-                $(go.Node, "Table", nodeStyle(),
-                    // the main object is a Panel that surrounds a TextBlock with a rectangular Shape
-                    $(go.Panel, "Auto",
-                        $(go.Shape, "Rectangle",
-                            { fill: "#00A9C9", strokeWidth: 0 },
-                            new go.Binding("figure", "figure")),
-                        $(go.TextBlock, textStyle(),
-                            {
-                                margin: 5,
-                                maxSize: new go.Size(100, NaN),
-                                wrap: go.TextBlock.WrapFit,
-                                editable: true
-                            },
-                            new go.Binding("text").makeTwoWay())
-                    ),
-                    // four named ports, one on each side:
-                    makePort("T", go.Spot.Top, go.Spot.TopSide, false, true),
-                    makePort("L", go.Spot.Left, go.Spot.LeftSide, true, true),
-                    makePort("R", go.Spot.Right, go.Spot.RightSide, true, true),
-                    makePort("B", go.Spot.Bottom, go.Spot.BottomSide, true, false)
-                ));
-
-            myDiagram_flowchart.linkTemplate =
-                $(go.Link,  // the whole link panel
-                    {
-                        routing: go.Link.AvoidsNodes,
-                        curve: go.Link.JumpOver,
-                        corner: 5, toShortLength: 4,
-                        relinkableFrom: true,
-                        relinkableTo: true,
-                        reshapable: true,
-                        resegmentable: true,
-                        // mouse-overs subtly highlight links:
-                        mouseEnter: function (e, link) {
-                            link.findObject("HIGHLIGHT").stroke = "rgba(30,144,255,0.2)";
-                        },
-                        mouseLeave: function (e, link) {
-                            link.findObject("HIGHLIGHT").stroke = "transparent";
-                        }
-                    },
-                    new go.Binding("points").makeTwoWay(),
-                    $(go.Shape,  // the highlight shape, normally transparent
-                        { isPanelMain: true, strokeWidth: 8, stroke: "transparent", name: "HIGHLIGHT" }),
-                    $(go.Shape,  // the link path shape
-                        { isPanelMain: true, stroke: "gray", strokeWidth: 2 }),
-                    $(go.Shape,  // the arrowhead
-                        { toArrow: "standard", strokeWidth: 0, fill: "gray" }),
-                    $(go.Panel, "Auto",  // the link label, normally not visible
-                        { visible: false, name: "LABEL", segmentIndex: 2, segmentFraction: 0.5 },
-                        new go.Binding("visible", "visible").makeTwoWay(),
-                        $(go.Shape, "RoundedRectangle",  // the label shape
-                            { fill: "#F8F8F8", strokeWidth: 0 }),
-                        $(go.TextBlock, "Yes",  // the label
-                            {
-                                textAlign: "center",
-                                font: "10pt helvetica, arial, sans-serif",
-                                stroke: "#333333",
-                                editable: true
-                            },
-                            new go.Binding("text").makeTwoWay())
-                    )
-                );
-
-            function showLinkLabel(e) {
-                var label = e.subject.findObject("LABEL");
-                if (label !== null) label.visible = (e.subject.fromNode.data.figure === "Diamond");
-            }
-
-            // temporary links used by LinkingTool and RelinkingTool are also orthogonal:
-            myDiagram_flowchart.toolManager.linkingTool.temporaryLink.routing = go.Link.Orthogonal;
-            myDiagram_flowchart.toolManager.relinkingTool.temporaryLink.routing = go.Link.Orthogonal;
-
-            // initialize the Palette that is on the left side of the page
-
-            myDiagram_flowchart.model = go.Model.fromJson(mySavedModel_flowchart);
-
-        }
-
-        // 이거필요
-        function spotConverter(dir, from) {
-            if (dir === "left") {
-                return (from ? go.Spot.Left : go.Spot.Right);
-            } else {
-                return (from ? go.Spot.Right : go.Spot.Left);
-            }
-        }
+  <script>
+    var opened = false;
+    function openNav() {
+        if(!opened){
+            document.getElementById("mySidenav").style.width = "20%";
+            document.getElementById("content").style.marginLeft = "20%";
+            document.getElementById("heed").style.marginLeft = "20%";
+            opened = true
+        } else if(opened) closeNav();
     }
-</script>
+
+    function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+        document.getElementById("content").style.marginLeft= "0";
+        document.getElementById("heed").style.marginLeft = "0";
+        opened = false;
+    }
+    </script> 
+
+</head>
+<div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <div class="dropdown">  
+                <a href="#" >Live Cam</a>
+                <div class="dropdown-content" style="background:#444444; ">
+                    <a href="#"><input type="text" id="meeting-name" style ="font-size : 20px;"><button id="setup-meeting" class="btn btn-primary" >Setup New Meeting</button></a>
+                    <a href="#" id = "hang-up" style ="font-size : 20px;">Hang-up</a>
+                    <a href="#"><table  id="meetings-list" style ="font-size : 20px;"></table></a>
+                </div>
+        </div>
+        <div class="dropdown" >
+                <a href="#" >Recording</a>
+                <div class="dropdown-content" style="background:#444444; ">
+                        <a href="#" id = "record" style ="color: red;font-size : 20px;">Record</a>
+                        <a href="#" id = "stop-recording" style ="font-size : 20px;">StopRecording</a>
+                        <a href="#" id = "download" style ="font-size : 20px;">download</a>
+                </div>
+        </div>
+        <div id="local-streams-container" style="float:right; width:100% ;height:40%;display:inline-block;" ></div>
+                <div id="lecture_chatt"></div>
+                    <div id="remote-streams-container" style="float:right; width:100% ;height:40%;display:inline-block;"></div>
+    </div>
+            
+
 
 <body>
   <header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" id = "heed">
       <a class="navbar-brand" href="#">
         <img src="assets/top%20logo.png" alt="#" height="55px">
       </a>
@@ -242,21 +92,13 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
         </ul>
-        <div id="div_join" class="panel panel-default" style="float:right;" >
-          <div class="panel-body" >
-            <table  id="meetings-list"></table>
-            <input type="text" id="meeting-name">
-            <button id="setup-meeting" class="btn btn-primary" >Setup New Meeting</button>
-            <button id="hang-up" class="btn btn-primary">Hang-up</button>
-            <button id="record" class="btn btn-primary" >Record</button>
-            <button id="stop" class="btn btn-primary">Stop recording</button>
-            <button id="download" class="btn btn-primary">Download</button>
-          </div>
-        </div>
+        <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Menu</span>
+        
+            
       </div>
     </nav>
   </header>
-
+  
   <main id="content" class="article">
     <div id="left_middle_widget">
       <div id="lecture_overview">
@@ -299,7 +141,7 @@
         <div class="card">
           <div class="card-header" id="headingTwo">
             <h5 class="mb-0">
-              <button class="btn btn-link collapsed" onclick="init();" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Flow Chart of Today's Example</button>
+              <button class="btn btn-link collapsed" onclick="chart_init();" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Flow Chart of Today's Example</button>
             </h5>
           </div>
           <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#lecture_overview">
@@ -312,14 +154,14 @@
 
       <div id="middle_right_widget">
         <div id="code_editor">
-            <iframe src="http://localhost:8081/" frameborder="0" width="100%" height='100%'></iframe>
+            <iframe src="http://13.125.244.123:8081/" frameborder="0" width="100%" height='99%'></iframe>
         </div>
-        <div id="right_upper_lower_widget" >
-            <div id="local-streams-container" style="margin:0 auto; width:100%; height:100%"></div>
-          <div id="lecture_chatt">
-            <div id="remote-streams-container" style="float:right; width:100% ;height:100%;display:inline-block;"></div>
-          </div>
-        </div>
+            <!-- <div id="right_upper_lower_widget" >
+                <div id="local-streams-container" style="margin:0 auto; width:100%; height:100%"></div>
+                <div id="lecture_chatt">
+                    <div id="remote-streams-container" style="float:right; width:100% ;height:100%;display:inline-block;"></div>
+                </div>
+            </div> -->
       </div>
     </div>
   </main>
@@ -330,141 +172,185 @@
 </body>
 
 <script>
-		
-        var meeting = new Meeting();
-                var meetingsList = document.getElementById('meetings-list');
-                var meetingRooms = {};
-                meeting.onmeeting = function (room) {
-                    if (meetingRooms[room.roomid]) return;
-                    meetingRooms[room.roomid] = room;
-                    var tr = document.createElement('tr');
-                    tr.innerHTML = '<td>' + room.roomid + '</td>' +
-                        '<td><button class="join">Join</button></td>';
-                    meetingsList.insertBefore(tr, meetingsList.firstChild);
-                    // when someone clicks table-row; joining the relevant meeting room
-                    tr.onclick = function () {
-                        room = meetingRooms[room.roomid];
-                        // manually joining a meeting room
-                        if (room) meeting.meet(room);
-                        meetingsList.style.display = 'none';
-                    };
-                };
-                var remoteMediaStreams = document.getElementById('remote-streams-container');
-                var localMediaStream = document.getElementById('local-streams-container');
-                // on getting media stream
-                meeting.onaddstream = function (e) {
-                    if (e.type == 'local') localMediaStream.appendChild(e.video);
-                    if (e.type == 'remote') remoteMediaStreams.insertBefore(e.video, remoteMediaStreams.firstChild);
-                };
-                
-                // via: https://github.com/muaz-khan/WebRTC-Experiment/tree/master/websocket-over-nodejs
-                meeting.openSignalingChannel = function(onmessage) {
-                    var channel = location.href.replace(/\/|:|#|%|\.|\[|\]/g, '');
-                    // wss://websocket-over-nodejs.herokuapp.com:443/
-                    var websocket = new WebSocket('wss://webrtcweb.com:9449/');
-                    websocket.onopen = function () {
-                        websocket.push(JSON.stringify({
-                            open: true,
-                            channel: channel
-                        }));
-                    };
-                    websocket.push = websocket.send;
-                    websocket.send = function (data) {
-                        if(websocket.readyState != 1) {
-                            return setTimeout(function() {
-                                websocket.send(data);
-                            }, 300);
-                        }
-                        
-                        websocket.push(JSON.stringify({
-                            data: data,
-                            channel: channel
-                        }));
-                    };
-                    websocket.onmessage = function(e) {
-                        onmessage(JSON.parse(e.data));
-                    };
-                    return websocket;
-                };
-                // using firebase for signaling
-                // meeting.firebase = 'muazkh';
-                // if someone leaves; just remove his video
-                meeting.onuserleft = function (userid) {
-                    var video = document.getElementById(userid);
-                    if (video) video.parentNode.removeChild(video);
-                };
-                // check pre-created meeting rooms
-                meeting.check();
-                document.getElementById('setup-meeting').onclick = function () {
-                    // setup new meeting room
-                    var meetingRoomName = document.getElementById('meeting-name').value || 'Simple Meeting';
-                    meeting.setup(meetingRoomName);
-                    this.disabled = true;
-                };
-                document.getElementById('hang-up').onclick= function(){
-                    
-                };
-
-</script>
-<script>
-    function captureScreen(cb) {
-        getScreenId(function (error, sourceId, screen_constraints) {
-            navigator.mediaDevices.getUserMedia(screen_constraints).then(cb).catch(function(error) {
-              console.error('getScreenId error', error);
-              alert('Failed to capture your screen. Please check Chrome console logs for further information.');
-            });
-        });
-    }
-    function captureCamera(cb) {
-        navigator.mediaDevices.getUserMedia({audio: true, video: false}).then(cb);
-    }
-    function keepStreamActive(stream) {
-        var video = document.createElement('video');
-        video.muted = true;
-        setSrcObject(stream, video);
-        video.style.display = 'none';
-        (document.body || document.documentElement).appendChild(video);
-    }
+        flag = true;
+        function chart_init() {
+            if (flag) {
+                mySavedModel_flowchart = {
+                    "class": "go.GraphLinksModel",
+                    "linkFromPortIdProperty": "fromPort",
+                    "linkToPortIdProperty": "toPort",
+                    "nodeDataArray": [
+                        {"key": 0, "category": "Start", "loc": "175 0", "text": "Build ui"},
+                        {"key": 1, "loc": "175 75", "text": "expose port: '/login', '/register', '/forget'"},
+                        {
+                            "key": 2,
+                            "loc": "175 150",
+                            "text": "integrate with passport.js"
+                        },
+                        {"key": 3, "loc": "75 225", "text": "login buton behaviour"},
+                        {"key": 4, "loc": "75 300", "text": "check login"},
+                        {"key": 5, "loc": "71 375", "text": "user exists" , "category":"condition"},
+                        {"key": 6, "loc": "75 600", "text": "yes: dashbord"},
+                        {"key": 7, "loc": "140 450", "text": "no: create user"},
+                        {"key": 8, "loc": "140 525", "text": "post '/register'"},
+                        {"key": 9, "loc": "275 225", "text": "forget password button behaviour"},
+                        {"key": 10, "loc": "275 300", "text": "post '/forget'"},
+                        {"key": 11, "loc": "275 375", "text": "send email to user's email"},
+                    ],
+                    "linkDataArray": [
+                        {"from": 0, "to": 1, "fromPort": "B", "toPort": "T", },
+                        {"from": 1, "to": 2, "fromPort": "B", "toPort": "T", },
+                        {"from": 2, "to": 3, "fromPort": "B", "toPort": "T"},
+                        {"from": 2, "to": 9, "fromPort": "B", "toPort": "T"},
+                        {"from": 3, "to": 4, "fromPort": "B", "toPort": "T"},
+                        {"from": 4, "to": 5, "fromPort": "B", "toPort": "T"},
+                        {"from": 5, "to": 6, "fromPort": "B", "toPort": "T"},
+                        {"from": 5, "to": 7, "fromPort": "B", "toPort": "T"},
+                        {"from": 7, "to": 8, "fromPort": "B", "toPort": "T"},
+                        {"from": 8, "to": 6, "fromPort": "B", "toPort": "T"},
+                        {"from": 9, "to": 10, "fromPort": "B", "toPort": "T"},
+                        {"from": 10, "to": 11, "fromPort": "B", "toPort": "T"},
+                    ]
+                }
+                var $ = go.GraphObject.make;
     
-    document.getElementById("record").onclick= function(){
-        captureScreen(function(screen) {
-            keepStreamActive(screen);
-            captureCamera(function(camera) {
-                keepStreamActive(camera);
-                screen.width = window.screen.width;
-                screen.height = window.screen.height;
-                screen.fullcanvas = true;
-                
-                var recorder = RecordRTC([screen, camera], {
-                    type: 'video',
-                    mimeType: 'video/webm',
-                    previewStream: function(s) {
-                        // document.querySelector('video').muted = true;
-                        // setSrcObject(s, document.querySelector('video'));
+    
+                myDiagram_flowchart =
+                    $(go.Diagram, "myDiagramDiv_flowchart",  // must name or refer to the DIV HTML element
+                        {
+                            initialContentAlignment: go.Spot.Center,
+                            allowDrop: false,  // must be true to accept drops from the Palette
+                            "LinkDrawn": showLinkLabel,  // this DiagramEvent listener is defined below
+                            "LinkRelinked": showLinkLabel,
+                            scrollsPageOnFocus: false,
+                            "undoManager.isEnabled": false, // enable undo & redo
+                            "commandHandler.copiesTree": false,
+                            "commandHandler.deletesTree": false,
+                            "draggingTool.dragsTree": false,
+                        });
+    
+    
+    
+                // helper definitions for node templates
+    
+                function nodeStyle() {
+                    return [
+                        new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
+                        {locationSpot: go.Spot.Center}
+                    ];
+                }
+    
+                function makePort(name, align, spot, output, input) {
+                    var horizontal = align.equals(go.Spot.Top) || align.equals(go.Spot.Bottom);
+                    return $(go.Shape,
+                        {
+                            fill: "transparent",  // changed to a color in the mouseEnter event handler
+                            strokeWidth: 0,  // no stroke
+                            width: horizontal ? NaN : 8,  // if not stretching horizontally, just 8 wide
+                            height: !horizontal ? NaN : 8,  // if not stretching vertically, just 8 tall
+                            alignment: align,  // align the port on the main Shape
+                            stretch: (horizontal ? go.GraphObject.Horizontal : go.GraphObject.Vertical),
+                            portId: name,  // declare this object to be a "port"
+                            fromSpot: spot,  // declare where links may connect at this port
+                            fromLinkable: output,  // declare whether the user may draw links from here
+                            toSpot: spot,  // declare where links may connect at this port
+                            toLinkable: input,  // declare whether the user may draw links to here
+                            cursor: "pointer",  // show a different cursor to indicate potential link point
+                            mouseEnter: function (e, port) {  // the PORT argument will be this Shape
+                                if (!e.diagram.isReadOnly) port.fill = "rgba(255,0,255,0.5)";
+                            },
+                            mouseLeave: function (e, port) {
+                                port.fill = "transparent";
+                            }
+                        });
+                }
+    
+                function textStyle() {
+                    return {
+                        font: "bold 10pt Helvetica, Arial, sans-serif",
+                        stroke: "whitesmoke"
                     }
-                });
-                recorder.startRecording();
-                document.getElementById("stop").onclick =  function() {
-                    recorder.stopRecording(function() {
-                        var blob = recorder.getBlob();
-                        // document.querySelector('video').src = URL.createObjectURL(blob);
-                        // document.querySelector('video').muted = false;
-                        [screen, camera].forEach(function(stream) {
-                            stream.getVideoTracks().forEach(function(track) {
-                                track.stop();
-                            });
-                            stream.getAudioTracks().forEach(function(track) {
-                                track.stop();
-                            });
-                        })
-                        document.getElementById("download").onclick = function(){
-                            download(blob,"ScreenCapture.webm","video");
-                        }
-                    });
-                    
-                };
-            });
-        });
-    }
-</script>
+                }
+    
+                myDiagram_flowchart.nodeTemplateMap.add("",  // the default category
+                    $(go.Node, "Table", nodeStyle(),
+                        // the main object is a Panel that surrounds a TextBlock with a rectangular Shape
+                        $(go.Panel, "Auto",
+                            $(go.Shape, "Rectangle",
+                                { fill: "#00A9C9", strokeWidth: 0 },
+                                new go.Binding("figure", "figure")),
+                            $(go.TextBlock, textStyle(),
+                                {
+                                    margin: 5,
+                                    maxSize: new go.Size(100, NaN),
+                                    wrap: go.TextBlock.WrapFit,
+                                    editable: true
+                                },
+                                new go.Binding("text").makeTwoWay())
+                        ),
+                        // four named ports, one on each side:
+                        makePort("T", go.Spot.Top, go.Spot.TopSide, false, true),
+                        makePort("L", go.Spot.Left, go.Spot.LeftSide, true, true),
+                        makePort("R", go.Spot.Right, go.Spot.RightSide, true, true),
+                        makePort("B", go.Spot.Bottom, go.Spot.BottomSide, true, false)
+                    ));
+    
+                myDiagram_flowchart.linkTemplate =
+                    $(go.Link,  // the whole link panel
+                        {
+                            routing: go.Link.AvoidsNodes,
+                            curve: go.Link.JumpOver,
+                            corner: 5, toShortLength: 4,
+                            relinkableFrom: true,
+                            relinkableTo: true,
+                            reshapable: true,
+                            resegmentable: true,
+                            // mouse-overs subtly highlight links:
+                            mouseEnter: function (e, link) {
+                                link.findObject("HIGHLIGHT").stroke = "rgba(30,144,255,0.2)";
+                            },
+                            mouseLeave: function (e, link) {
+                                link.findObject("HIGHLIGHT").stroke = "transparent";
+                            }
+                        },
+                        new go.Binding("points").makeTwoWay(),
+                        $(go.Shape,  // the highlight shape, normally transparent
+                            { isPanelMain: true, strokeWidth: 8, stroke: "transparent", name: "HIGHLIGHT" }),
+                        $(go.Shape,  // the link path shape
+                            { isPanelMain: true, stroke: "gray", strokeWidth: 2 }),
+                        $(go.Shape,  // the arrowhead
+                            { toArrow: "standard", strokeWidth: 0, fill: "gray" }),
+                        $(go.Panel, "Auto",  // the link label, normally not visible
+                            { visible: false, name: "LABEL", segmentIndex: 2, segmentFraction: 0.5 },
+                            new go.Binding("visible", "visible").makeTwoWay(),
+                            $(go.Shape, "RoundedRectangle",  // the label shape
+                                { fill: "#F8F8F8", strokeWidth: 0 }),
+                            $(go.TextBlock, "Yes",  // the label
+                                {
+                                    textAlign: "center",
+                                    font: "10pt helvetica, arial, sans-serif",
+                                    stroke: "#333333",
+                                    editable: true
+                                },
+                                new go.Binding("text").makeTwoWay())
+                        )
+                    );
+    
+                function showLinkLabel(e) {
+                    var label = e.subject.findObject("LABEL");
+                    if (label !== null) label.visible = (e.subject.fromNode.data.figure === "Diamond");
+                }
+                myDiagram_flowchart.toolManager.linkingTool.temporaryLink.routing = go.Link.Orthogonal;
+                myDiagram_flowchart.toolManager.relinkingTool.temporaryLink.routing = go.Link.Orthogonal;
+                myDiagram_flowchart.model = go.Model.fromJson(mySavedModel_flowchart);
+            }
+            function spotConverter(dir, from) {
+                if (dir === "left") {
+                    return (from ? go.Spot.Left : go.Spot.Right);
+                } else {
+                    return (from ? go.Spot.Right : go.Spot.Left);
+                }
+            }
+        }
+    </script>
 </html>

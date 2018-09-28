@@ -1,5 +1,5 @@
 window.onload = function(){
-
+//////RecordRTC
     function captureScreen(cb) {
         getScreenId(function (error, sourceId, screen_constraints) {
             navigator.mediaDevices.getUserMedia(screen_constraints).then(cb).catch(function(error) {
@@ -61,6 +61,8 @@ window.onload = function(){
             });
         });
     }
+
+    //// webRTC
     document.getElementById("hang-up").disabled = true;
     document.getElementById("stop-recording").disabled = true;
     document.getElementById("download").disabled = true;

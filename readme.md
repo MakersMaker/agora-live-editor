@@ -1,6 +1,10 @@
 ## MakersMaker Editor
 - This is a lecture page for online coding education flatform called MakersMaker.
 
+### Feature
+- A tutor & A tutee can pair programming by Live Editor feature
+- Students can make a Video Call to a tutor for getting help directly
+- Video Recording for review 
 
 ### Start Server
 ```sh

@@ -1,4 +1,5 @@
-## Agora Live Editor
+## Makers Maker Editor
+- This is a lecture page for online coding education flatform called MakersMaker.
 
 ### Start Server
 ```sh

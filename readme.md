@@ -1,5 +1,6 @@
-## Makers Maker Editor
+## MakersMaker Editor
 - This is a lecture page for online coding education flatform called MakersMaker.
+
 
 ### Start Server
 ```sh

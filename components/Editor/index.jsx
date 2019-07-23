@@ -98,6 +98,7 @@ export default class Editor extends React.Component {
   }
 
   socketRecive() {
+    console.log('hi');
     console.log("socketRecive");
     this.socket.on('codeRecive',(data)=>{
       console.log("update");

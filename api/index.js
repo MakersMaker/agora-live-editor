@@ -19,32 +19,31 @@ const options = {
 app = express();
 app.use(cors());
 app.use(express.static('./public' ));
+app.use(express.urlencoded({extended: true}));
 app.use(bodyParser.json());
-app.use(express.urlencoded());
-
 
 app.set('views', __dirname +  '/public');
 app.engine('html', require('ejs').renderFile);
+app.set('view engine','html');
 
 var httpPort = 8082;
 var httpsPort = 8081;
-
 
 const server = https.createServer(options,app).listen(httpsPort, (req,res) =>{
   console.log("Https server listening on port " + httpsPort);
 });
 
-http.createServer(app).listen(httpPort, function(){  
-  console.log("Http server listening on port " + httpPort);
-});
 
-const io = require('socket.io')(server);
+const io = require('socket.io')(server,{path: '/socket.io'});
 
 io.on('connection' , (socket)=>{
+  console.log('hihi');
+
   socket.on('codeSend', (data)=>{
-    console.log("asdf");
+    console.log("소켓연결 제대로댐");
     socket.broadcast.emit('codeRecive', data);
   });
+
   socket.on('messageSend' , (data)=>{
     socket.broadcast.emit('messageRecive', data);
   });
@@ -67,7 +66,13 @@ app.post('/files', (req, res) => {
 });
 
 app.get('/lecturePage' , (req,res)=>{
+  
   res.render('lecturePage.html');
+})
+
+app.get('/hello',(req,res)=>{
+  res.set({'{Content-Type' : 'text/html;'});
+  res.render('hello.html');
 })
 
 

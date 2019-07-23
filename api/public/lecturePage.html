@@ -27,7 +27,8 @@
   <script src="js/jquery.splitter.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/vendor/splitter/splitter.js"></script>
-  <script src = "js/jsForLecturepage.js"></script>
+  <script src="js/jsForLecturepage.js"></script>
+  <script src="js/brython.js"></script>
 
   <!--[if IE]>
   <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -151,17 +152,17 @@
           </div>
         </div>
       </div>
-
       <div id="middle_right_widget">
         <div id="code_editor">
             <iframe src="https://localhost:8081/" frameborder="0" width="100%" height='99%'></iframe>
         </div>
-            <!-- <div id="right_upper_lower_widget" >
-                <div id="local-streams-container" style="margin:0 auto; width:100%; height:100%"></div>
-                <div id="lecture_chatt">
-                    <div id="remote-streams-container" style="float:right; width:100% ;height:100%;display:inline-block;"></div>
-                </div>
-            </div> -->
+        <div id="console-wrapper" >
+          <button onclick="brython()">run</button>
+          <script type="text/python">
+          print("hello brython world!")
+          </script>
+          <textarea id="con sole"autocomplete="off"  style="width: 100%;height: 99%" ></textarea>
+        </div>
       </div>
     </div>
   </main>

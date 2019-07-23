@@ -37,10 +37,10 @@ const server = https.createServer(options,app).listen(httpsPort, (req,res) =>{
 const io = require('socket.io')(server,{path: '/socket.io'});
 
 io.on('connection' , (socket)=>{
-  console.log('hihi');
+  console.log('Connected!');
 
   socket.on('codeSend', (data)=>{
-    console.log("소켓연결 제대로댐");
+    console.log("codeSend");
     socket.broadcast.emit('codeRecive', data);
   });
 

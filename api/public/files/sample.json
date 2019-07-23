@@ -11,7 +11,8 @@
             "123456" :"1234",
             "12345" : "12345",
             "hellos" : 1234,
-            "aasd" : "asdasd"
+            "aasd" : "asdasd",
+            "hello" : "brython"
         }
     } 
 }

@@ -9,6 +9,8 @@
   <script src="google-blockly-82871b3/javascript_compressed.js"></script>
   <script src="google-blockly-82871b3/python_compressed.js"></script>
   <script src="google-blockly-82871b3/msg/js/en.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+
   <style>
     body {
       background-color: #fff;
@@ -20,7 +22,7 @@
     }
   </style>
 </head>
-<body>
+<body onload="init();">
   <p>
     <button onclick="blockExecution()" id="stepButton">블록 프로그램 실행</button>
     <button onclick="jsExecution()" id="jsButton">Javascript 프로그램 실행</button>
@@ -126,8 +128,10 @@
       </next>
     </block>
   </xml>
-
   <script>
+    const socket = io();
+    socket.emit("connection");
+    //socket.on('')
     var demoWorkspace = Blockly.inject('blocklyDiv',
         {media: 'media/',
          toolbox: document.getElementById('toolbox')});
@@ -270,6 +274,8 @@
       Blockly.JavaScript.addReservedWords('highlightBlock');
       latestCode = Blockly.JavaScript.workspaceToCode(demoWorkspace);
       resetStepUi(true);
+      console.log(prettyXMLText);
+      socket.emit('blockSend', {data: prettyXMLText});
     }
 
     function stepCode(exeCode) {

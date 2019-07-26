@@ -36,7 +36,7 @@ const server = https.createServer(options,app).listen(httpsPort, (req,res) =>{
 
 const webrtc = Webrtcserver(server);
 
-const io = require('socket.io')(server,{path: '/socket.io'});
+const io = require('socket.io')(server,{path: '/socket.io'}).listen(server);
 
 io.on('connection' , (socket)=>{
   console.log('Connected!');

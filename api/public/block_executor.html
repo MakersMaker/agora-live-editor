@@ -134,7 +134,8 @@
     const socket = io();
     socket.emit("connection");
     socket.on('blockRecive', (data) => {
-      console.log("recive");
+      demoWorkspace.clear();
+      fromXml(data.data);
     });
 
     var demoWorkspace = Blockly.inject('blocklyDiv',
@@ -280,10 +281,14 @@
       // XML handling code
       var xml = Blockly.Xml.workspaceToDom(demoWorkspace);
       var prettyXMLText = Blockly.Xml.domToPrettyText(xml);
+      
       if(latestXML != prettyXMLText){
         // use this area for block sharing
         latestXML = prettyXMLText;
+        console.log("changed");
+        socket.emit('blockSend', {data: prettyXMLText});
       }
+      
       /*var nextXml = Blockly.Xml.textToDom(prettyXMLText);
       Blockly.Xml.domToWorkspace(nextXml, demoWorkspace);*/
       pyCode = Blockly.Python.workspaceToCode(demoWorkspace);
@@ -294,8 +299,7 @@
       latestCode = Blockly.JavaScript.workspaceToCode(demoWorkspace);
       resetStepUi(true);
       //console.log(prettyXMLText);
-      console.log("changed");
-      socket.emit('blockSend', {data: prettyXMLText});
+      
     }
 
     function stepCode(exeCode) {

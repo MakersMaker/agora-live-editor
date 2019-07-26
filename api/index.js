@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const fs = require('fs');
 const https = require('https');
 const http = require('http');
+const Webrtcserver = require('./public/js/websocket')
 
 const config = {
   filesPath: './public/files'
@@ -33,6 +34,7 @@ const server = https.createServer(options,app).listen(httpsPort, (req,res) =>{
   console.log("Https server listening on port " + httpsPort);
 });
 
+const webrtc = Webrtcserver(server);
 
 const io = require('socket.io')(server,{path: '/socket.io'});
 

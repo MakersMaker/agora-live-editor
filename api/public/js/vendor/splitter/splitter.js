@@ -8,7 +8,7 @@ jQuery(function ($) {
   $('#middle_right_widget').split({
     orientation: 'vertical',
     limit: 10,
-    position: '70%',
+    position: '100%',
     percent: true
   });
   // $('#right_upper_lower_widget').split({

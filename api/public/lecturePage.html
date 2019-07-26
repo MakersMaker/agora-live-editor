@@ -40,16 +40,16 @@
     function openNav() {
         if(!opened){
             document.getElementById("mySidenav").style.width = "20%";
-            document.getElementById("content").style.marginLeft = "20%";
-            document.getElementById("heed").style.marginLeft = "20%";
+            document.getElementById("content").style.marginRight = "20%";
+            document.getElementById("heed").style.marginRight = "20%";
             opened = true
         } else if(opened) closeNav();
     }
 
     function closeNav() {
         document.getElementById("mySidenav").style.width = "0";
-        document.getElementById("content").style.marginLeft= "0";
-        document.getElementById("heed").style.marginLeft = "0";
+        document.getElementById("content").style.marginRight= "0";
+        document.getElementById("heed").style.marginRight = "0";
         opened = false;
     }
     </script> 
@@ -102,6 +102,7 @@
   
   <main id="content" class="article">
     <div id="left_middle_widget">
+
       <div id="lecture_overview">
         <div class="card">
           <div class="card-header" id="headingOne">
@@ -112,15 +113,31 @@
 
           <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#lecture_overview">
             <div class="card-body">
-              <img src="https://www.shareicon.net/data/256x256/2016/06/07/777351_multimedia_512x512.png">
-              <h5>Log-in</h5>
-              Log-in is one of the most impoortant part in making your own online shopping mall. From the Log-in part, everything for online
-              shopping mall starts. You can't buy or sell products without log-in part. Log-in part is the
-              most important part, but it is also hard to implement. But, It is not that difficult if you make
-              it step-by-step. Then, Let's make the Log-in part from now!
+                <iframe width="100%" height="600px" src="https://www.youtube.com/embed/dPRtcRwKo-Y?list=PLuHgQVnccGMBB348PWRN0fREzYcYgFybf"
+                frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              
             </div>
           </div>
         </div>
+
+        <div class="card">
+            <div class="card-header" id="headingFour">
+              <h5 class="mb-0">
+                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">Today's 강의</button>
+              </h5>
+            </div>
+  
+            <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#lecture_overview">
+              <div class="card-body">
+                <img src="https://www.shareicon.net/data/256x256/2016/06/07/777351_multimedia_512x512.png">
+                <h5>Log-in</h5>
+                Log-in is one of the most impoortant part in making your own online shopping mall. From the Log-in part, everything for online
+                shopping mall starts. You can't buy or sell products without log-in part. Log-in part is the
+                most important part, but it is also hard to implement. But, It is not that difficult if you make
+                it step-by-step. Then, Let's make the Log-in part from now!
+              </div>
+            </div>
+          </div>
 
         <div class="card">
           <div class="card-header" id="headingThree">
@@ -154,15 +171,18 @@
       </div>
       <div id="middle_right_widget">
         <div id="code_editor">
-            <iframe src="https://localhost:8081/" frameborder="0" width="100%" height='99%'></iframe>
-        </div>
-        <div id="console-wrapper" >
-          <button onclick="brython()">run</button>
-          <script type="text/python">
-          print("hello brython world!")
-          </script>
-          <textarea id="con sole"autocomplete="off"  style="width: 100%;height: 99%" ></textarea>
-        </div>
+            <iframe src="https://localhost:8081/" frameborder="0" width="100%" height='90%'></iframe>
+            
+            <div id="console-wrapper">
+              <button onclick="brython()">run</button>
+              <script type="text/python">
+              print("hello brython world!")
+              </script>
+              <textarea id="con sole"autocomplete="off"  style="width: 100%;height: 90%" ></textarea>
+            
+            </div>
+          </div>
+       
       </div>
     </div>
   </main>

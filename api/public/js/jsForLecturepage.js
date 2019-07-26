@@ -105,7 +105,7 @@ window.onload = function(){
         var channel = location.href.replace(/\/|:|#|%|\.|\[|\]/g, '');
         // wss://websocket-over-nodejs.herokuapp.com:443/
         // var websocket = new WebSocket('wss://webrtcweb.com:9449/');
-        var websocket = new WebSocket('wss://websocket-over-nodejs.herokuapp.com:443/');
+        var websocket = new WebSocket('wss://localhost:8081/');
         websocket.onopen = function () {
             websocket.push(JSON.stringify({
                 open: true,

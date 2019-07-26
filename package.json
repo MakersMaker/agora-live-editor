@@ -61,6 +61,8 @@
     "react-treebeard": "^2.1.0",
     "socket.io": "^2.2.0",
     "socket.io-client": "^2.2.0",
-    "styled-components": "^3.3.3"
+    "styled-components": "^3.3.3",
+    "websocket": "^1.0.29",
+    "ws": "^7.1.1"
   }
 }

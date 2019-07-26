@@ -256,11 +256,13 @@
 
     function generateCodeAndLoadIntoInterpreter() {
       // Generate JavaScript code and parse it.
-
       // XML handling code
       var xml = Blockly.Xml.workspaceToDom(demoWorkspace);
       var prettyXMLText = Blockly.Xml.domToPrettyText(xml);
-      latestXML = prettyXMLText;
+      if(latestXML != prettyXMLText){
+        // use this area for block sharing
+        latestXML = prettyXMLText;
+      }
       /*var nextXml = Blockly.Xml.textToDom(prettyXMLText);
       Blockly.Xml.domToWorkspace(nextXml, demoWorkspace);*/
       pyCode = Blockly.Python.workspaceToCode(demoWorkspace);

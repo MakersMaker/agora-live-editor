@@ -2,7 +2,9 @@
 - This is a lecture page for online coding education flatform called MakersMaker.
 
 ### Feature
+- MakersMaker supports coding & block coding
 - A tutor & A tutee can pair programming by Live Editor feature
+- Studnets can compile on web for check output directly
 - Students can make a Video Call to a tutor for getting help directly
 - Video Recording for review 
 
@@ -16,9 +18,9 @@ npm start
 - This will start webpack dev server
 ```sh
 # wevpack dev server
-npm dev
+npm run dev
 # or to build
-npm build
+npm run build
 ```
 
 ### Files Storage

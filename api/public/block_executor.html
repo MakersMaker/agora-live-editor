@@ -1,0 +1,313 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Blockly Demo: Step Execution with JS Interpreter</title>
+  <script src="google-blockly-82871b3/acorn_interpreter.js"></script>
+  <script src="google-blockly-82871b3/blockly_compressed.js"></script>
+  <script src="google-blockly-82871b3/blocks_compressed.js"></script>
+  <script src="google-blockly-82871b3/javascript_compressed.js"></script>
+  <script src="google-blockly-82871b3/python_compressed.js"></script>
+  <script src="google-blockly-82871b3/msg/js/en.js"></script>
+  <style>
+    body {
+      background-color: #fff;
+      font-family: sans-serif;
+    }
+    h1 {
+      font-weight: normal;
+      font-size: 140%;
+    }
+  </style>
+</head>
+<body>
+  <p>
+    <button onclick="blockExecution()" id="stepButton">블록 프로그램 실행</button>
+    <button onclick="jsExecution()" id="jsButton">Javascript 프로그램 실행</button>
+    <button onclick="pyExecution()" id="pyButton">Python 프로그램 실행</button>
+    <button onclick="toXml()" id="getXml">XML 추출</button>
+  </p>
+
+  <div style="width: 100%">
+    <div id="blocklyDiv"
+        style="display: inline-block; height: 480px; width: 58%"></div>
+    <textarea id="output" disabled="disabled"
+        style="display: inline-block; height: 480px; width: 38%;">
+    </textarea>
+  </div>
+
+  <xml id="toolbox" style="display: none">
+    <category name="Logic" colour="%{BKY_LOGIC_HUE}">
+      <block type="controls_if"></block>
+      <block type="logic_compare"></block>
+      <block type="logic_operation"></block>
+      <block type="logic_negate"></block>
+      <block type="logic_boolean"></block>
+    </category>
+    <category name="Loops" colour="%{BKY_LOOPS_HUE}">
+      <block type="controls_repeat_ext">
+        <value name="TIMES">
+          <block type="math_number">
+            <field name="NUM">10</field>
+          </block>
+        </value>
+      </block>
+      <block type="controls_whileUntil"></block>
+    </category>
+    <category name="Math" colour="%{BKY_MATH_HUE}">
+      <block type="math_number">
+        <field name="NUM">123</field>
+      </block>
+      <block type="math_arithmetic"></block>
+      <block type="math_single"></block>
+    </category>
+    <category name="Text" colour="%{BKY_TEXTS_HUE}">
+      <block type="text"></block>
+      <block type="text_length"></block>
+      <block type="text_print"></block>
+      <block type="text_prompt_ext">
+        <value name="TEXT">
+          <block type="text"></block>
+        </value>
+      </block>
+    </category>
+    <sep></sep>
+    <category name="Variables" custom="VARIABLE" colour="%{BKY_VARIABLES_HUE}">
+    </category>
+    <category name="Functions" custom="PROCEDURE" colour="%{BKY_PROCEDURES_HUE}">
+    </category>
+  </xml>
+
+  <xml id="startBlocks" style="display: none">
+    <block type="variables_set" id="set_n_initial" inline="true" x="20" y="20">
+      <field name="VAR">n</field>
+      <value name="VALUE">
+        <block type="math_number">
+          <field name="NUM">1</field>
+        </block>d
+      </value>
+      <next>
+        <block type="controls_repeat_ext" id="repeat" inline="true">
+          <value name="TIMES">
+            <block type="math_number">
+              <field name="NUM">4</field>
+            </block>
+          </value>
+          <statement name="DO">
+            <block type="variables_set" id="set_n_update" inline="true">
+              <field name="VAR">n</field>
+              <value name="VALUE">
+                <block type="math_arithmetic" inline="true">
+                  <field name="OP">MULTIPLY</field>
+                  <value name="A">
+                    <block type="variables_get">
+                      <field name="VAR">n</field>
+                    </block>
+                  </value>
+                  <value name="B">
+                    <block type="math_number">
+                      <field name="NUM">2</field>
+                    </block>
+                  </value>
+                </block>
+              </value>
+              <next>
+                <block type="text_print" id="print">
+                  <value name="TEXT">
+                    <block type="variables_get">
+                      <field name="VAR">n</field>
+                    </block>
+                  </value>
+                </block>
+              </next>
+            </block>
+          </statement>
+        </block>
+      </next>
+    </block>
+  </xml>
+
+  <script>
+    var demoWorkspace = Blockly.inject('blocklyDiv',
+        {media: 'media/',
+         toolbox: document.getElementById('toolbox')});
+    Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'),
+                               demoWorkspace);
+    var outputArea = document.getElementById('output');
+    var stepButton = document.getElementById('stepButton');
+    var jsButton = document.getElementById('jsButton');
+    var myInterpreter = null;
+    var latestXML;
+
+    function workspaceClear(){
+      blockWorkspace.clear();
+    }
+
+    function fromXml(prettyXML) {
+      var xml = Blockly.Xml.textToDom(prettyXML);
+      Blockly.Xml.domToWorkspace(xml, demoWorkspace);
+      taChange();
+    }
+
+    function toXml() {
+      var xml = Blockly.Xml.workspaceToDom(demoWorkspace);
+      var prettyXML = Blockly.Xml.domToPrettyText(xml);
+      console.log(prettyXML);
+      return prettyXML;
+    }
+
+    function delayWraper(exeCode) {
+      return new Promise(function (resolve, reject) {
+        setTimeout(function () {
+          var isFalse = stepCode(exeCode);
+          resolve(isFalse);
+        }, 1000);
+      });
+    }
+
+    function goStep(exeCode){
+      delayWraper(exeCode)
+              .then(
+                      function (result) {
+                        if(result != false)
+                          goStep();
+                      }
+              );
+    }
+    var trueOrDare = true;
+    function blockExecution(){
+      if(!trueOrDare){
+        document.getElementById('blocklyDiv').innerHTML = ""
+        demoWorkspace = Blockly.inject('blocklyDiv',
+                {media: '../../media/',
+                  toolbox: document.getElementById('toolbox')});
+        Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'),
+                demoWorkspace);
+        trueOrDare = true;
+      }
+      /*stepButton.disabled = 'disabled';
+      jsButton.disabled = 'disabled';*/
+
+      goStep(latestCode);
+
+      // Cool down, to discourage accidentally restarting the program.
+    }
+
+    function jsExecution(){
+      if(trueOrDare){
+        document.getElementById('blocklyDiv').innerHTML =
+                '<textarea style=\"height: 480px;width:100%;\">' +
+                noHighlightCode +
+                "</textarea>"
+        trueOrDare = false;
+      }
+      goStep(noHighlightCode)
+    }
+
+    function pyExecution(){
+      alert(pyCode);
+    }
+
+
+
+    function initApi(interpreter, scope) {
+      // Add an API function for the alert() block, generated for "text_print" blocks.
+      interpreter.setProperty(scope, 'alert',
+          interpreter.createNativeFunction(function(text) {
+        text = text ? text.toString() : '';
+        outputArea.value += '\n' + text;
+      }));
+
+      // Add an API function for the prompt() block.
+      var wrapper = function(text) {
+        text = text ? text.toString() : '';
+        return interpreter.createPrimitive(prompt(text));
+      };
+      interpreter.setProperty(scope, 'prompt',
+          interpreter.createNativeFunction(wrapper));
+
+      // Add an API function for highlighting blocks.
+      var wrapper = function(id) {
+        id = id ? id.toString() : '';
+        return interpreter.createPrimitive(highlightBlock(id));
+      };
+      interpreter.setProperty(scope, 'highlightBlock',
+          interpreter.createNativeFunction(wrapper));
+    }
+
+    var highlightPause = false;
+    var latestCode = '';
+    var noHighlightCode = '';
+    var pyCode = '';
+
+    function highlightBlock(id) {
+      demoWorkspace.highlightBlock(id);
+      highlightPause = true;
+    }
+
+    function resetStepUi(clearOutput) {
+      demoWorkspace.highlightBlock(null);
+      highlightPause = false;
+
+      if (clearOutput) {
+        outputArea.value = 'Program output:\n=================';
+      }
+    }
+
+    function generateCodeAndLoadIntoInterpreter() {
+      // Generate JavaScript code and parse it.
+
+      // XML handling code
+      var xml = Blockly.Xml.workspaceToDom(demoWorkspace);
+      var prettyXMLText = Blockly.Xml.domToPrettyText(xml);
+      latestXML = prettyXMLText;
+      /*var nextXml = Blockly.Xml.textToDom(prettyXMLText);
+      Blockly.Xml.domToWorkspace(nextXml, demoWorkspace);*/
+      pyCode = Blockly.Python.workspaceToCode(demoWorkspace);
+      Blockly.JavaScript.STATEMENT_PREFIX = "";
+      noHighlightCode = Blockly.JavaScript.workspaceToCode(demoWorkspace);
+      Blockly.JavaScript.STATEMENT_PREFIX = 'highlightBlock(%1);\n';
+      Blockly.JavaScript.addReservedWords('highlightBlock');
+      latestCode = Blockly.JavaScript.workspaceToCode(demoWorkspace);
+      resetStepUi(true);
+    }
+
+    function stepCode(exeCode) {
+      if (!myInterpreter) {
+        // First statement of this code.
+        // Clear the program output.
+        resetStepUi(true);
+        myInterpreter = new Interpreter(exeCode, initApi);
+        return;
+      }
+      highlightPause = false;
+      do {
+        try {
+          var hasMoreCode = myInterpreter.step();
+        } finally {
+          if (!hasMoreCode) {
+            // Program complete, no more code to execute.
+            outputArea.value += '\n\n<< Program complete >>';
+
+            myInterpreter = null;
+            resetStepUi(false);
+
+            return false;
+          }
+        }
+        // Keep executing until a highlight statement is reached,
+        // or the code completes or errors.
+      } while (hasMoreCode && !highlightPause);
+    }
+
+    // Load the interpreter now, and upon future changes.
+    generateCodeAndLoadIntoInterpreter();
+    demoWorkspace.addChangeListener(function(event) {
+      if (!(event instanceof Blockly.Events.Ui)) {
+        // Something changed. Parser needs to be reloaded.
+        generateCodeAndLoadIntoInterpreter();
+      }
+    });
+  </script>
+</body>
+</html>

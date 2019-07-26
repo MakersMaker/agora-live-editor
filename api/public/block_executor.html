@@ -134,9 +134,13 @@
     const socket = io();
     socket.emit("connection");
     socket.on('blockRecive', (data) => {
-      demoWorkspace.clear();
-      fromXml(data.data);
-    });
+        if(data.data != latestXML){
+          console.log("dongeun JJangc")
+          demoWorkspace.clear();
+          fromXml(data.data);
+        }
+      
+      });
 
     var demoWorkspace = Blockly.inject('blocklyDiv',
         {media: 'media/',

@@ -7,6 +7,7 @@ import { server } from '../config';
 import { style } from '../config';
 import io from 'socket.io-client';
 import { Button } from '@material-ui/core';
+import axios from 'axios';
 
 export default class Editor extends React.Component {
   state = {
@@ -52,6 +53,7 @@ export default class Editor extends React.Component {
       result : '하이'
     });
   };
+  
 
   componentDidMount() {
     this.editor = monaco.editor.create(this.editorDOM.current, {

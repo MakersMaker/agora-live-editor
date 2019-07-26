@@ -77,6 +77,7 @@ app.get('/hello',(req,res)=>{
 })
 
 app.post('/compile', (req,res)=>{
+  console.log('hi')
   const fileName = req.body.fileName;
   const filePath = path.join(config.filesPath, fileName);
   const extend = fileName.split('.')[1];

@@ -57,7 +57,7 @@ export default class Editor extends React.Component {
     console.log(data);
     
   axios({
-          url: 'https://localhost:8081/compile',
+          url: 'https://15.164.212.226:8081/compile',
           method: 'post',
           data: {
             fileName: this.state.file.name,

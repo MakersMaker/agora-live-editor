@@ -26,6 +26,8 @@
     <button onclick="jsExecution()" id="jsButton">Javascript 프로그램 실행</button>
     <button onclick="pyExecution()" id="pyButton">Python 프로그램 실행</button>
     <button onclick="toXml()" id="getXml">XML 추출</button>
+    <button onclick="goxml()" id="goxml">XML 추출</button>
+    <button onclick="gotoxml()" id="goxml">XML 추출</button>
   </p>
 
   <div style="width: 100%">
@@ -139,6 +141,18 @@
     var myInterpreter = null;
     var latestXML;
 
+    var resultss = ""
+
+    function goxml(){
+      resultss = toXml()
+      demoWorkspace.clear();
+    }
+
+    function gotoxml(){
+      fromXml(resultss);
+      
+    }
+
     function workspaceClear(){
       blockWorkspace.clear();
     }
@@ -146,7 +160,7 @@
     function fromXml(prettyXML) {
       var xml = Blockly.Xml.textToDom(prettyXML);
       Blockly.Xml.domToWorkspace(xml, demoWorkspace);
-      taChange();
+      //taChange();
     }
 
     function toXml() {

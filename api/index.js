@@ -49,6 +49,13 @@ io.on('connection' , (socket)=>{
   socket.on('messageSend' , (data)=>{
     socket.broadcast.emit('messageRecive', data);
   });
+
+  socket.on('blockSend', (data) =>{
+    console.log(data);
+    socket.broadcast.emit('messageRecive', data);
+  })
+
+  
 });
 
 app.get('/filestree', (req, res) => {

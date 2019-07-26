@@ -25,6 +25,7 @@
     <button onclick="blockExecution()" id="stepButton">블록 프로그램 실행</button>
     <button onclick="jsExecution()" id="jsButton">Javascript 프로그램 실행</button>
     <button onclick="pyExecution()" id="pyButton">Python 프로그램 실행</button>
+    <button onclick="toXml()" id="getXml">XML 추출</button>
   </p>
 
   <div style="width: 100%">
@@ -136,6 +137,24 @@
     var stepButton = document.getElementById('stepButton');
     var jsButton = document.getElementById('jsButton');
     var myInterpreter = null;
+    var latestXML;
+
+    function workspaceClear(){
+      blockWorkspace.clear();
+    }
+
+    function fromXml(prettyXML) {
+      var xml = Blockly.Xml.textToDom(prettyXML);
+      Blockly.Xml.domToWorkspace(xml, demoWorkspace);
+      taChange();
+    }
+
+    function toXml() {
+      var xml = Blockly.Xml.workspaceToDom(demoWorkspace);
+      var prettyXML = Blockly.Xml.domToPrettyText(xml);
+      console.log(prettyXML);
+      return prettyXML;
+    }
 
     function delayWraper(exeCode) {
       return new Promise(function (resolve, reject) {
@@ -239,9 +258,10 @@
       // Generate JavaScript code and parse it.
 
       // XML handling code
-      /*var xml = Blockly.Xml.workspaceToDom(demoWorkspace);
+      var xml = Blockly.Xml.workspaceToDom(demoWorkspace);
       var prettyXMLText = Blockly.Xml.domToPrettyText(xml);
-      var nextXml = Blockly.Xml.textToDom(prettyXMLText);
+      latestXML = prettyXMLText;
+      /*var nextXml = Blockly.Xml.textToDom(prettyXMLText);
       Blockly.Xml.domToWorkspace(nextXml, demoWorkspace);*/
       pyCode = Blockly.Python.workspaceToCode(demoWorkspace);
       Blockly.JavaScript.STATEMENT_PREFIX = "";

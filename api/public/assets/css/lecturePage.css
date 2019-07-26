@@ -13,13 +13,7 @@ header {
 main {
     margin: 0;
     padding: 0;
-    height: 88%;
-}
-
-footer {
-    margin: 0;
-    padding: 0;
-    height: 5%;
+    height: 90%;
 }
 
 .collapse {

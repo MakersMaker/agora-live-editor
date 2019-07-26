@@ -48,7 +48,7 @@
 	<!--<link rel="stylesheet" href="css/color/color8.css">-->
 </head>
 
-<body>
+<body onload="init()">
 
 	<!-- Book Preloader -->
 	<div class="book_preload">
@@ -177,196 +177,187 @@
 	</header>
 	<!-- End Header -->
 
-	<!-- Slider Area -->
-	<section class="home-slider">
-		<div class="slider-active">
-			<!-- Single Slider -->
-			<div class="single-slider overlay" style="background-image:url('https://www.brainscape.com/blog/wp-content/uploads/2011/08/o-TEEN-STUDYING-LATE-facebook.jpg')"
-			 data-stellar-background-ratio="0.5">
-				<div class="container">
-					<div class="row">
-						<div class="col-lg-8 col-md-8 col-12">
-							<div class="slider-text">
-								<h1>Perfect Courses to be an
-									<span>Expert</span> in your field</h1>
-								<p>Our mission is to empower clients, colleagues, and communities to achieve aspirations while building lasting, caring
-									relationships.</p>
-								<div class="button">
-									<a href="courses.html" class="btn primary">What to Learn</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!--/ End Single Slider -->
-			<!-- Single Slider -->
-			<div class="single-slider overlay" style="background-image:url('https://cdn-images-1.medium.com/max/1000/1*zTYrUVqltB-pUv_w8s_HAA.jpeg')"
-			 data-stellar-background-ratio="0.5">
-				<div class="container">
-					<div class="row">
-						<div class="col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-12">
-							<div class="slider-text text-center">
-								<h1>Learn A to Z about
-									<span>Computer Science</span> & Applications</h1>
-								<p>Our mission is to empower clients, colleagues, and communities to achieve aspirations while building lasting, caring
-									relationships.</p>
-								<div class="button">
-									<a href="courses.html" class="btn primary">What to Learn</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!--/ End Single Slider -->
-		</div>
-	</section>
-	<!--/ End Slider Area -->
-
-	<!-- Events -->
-	<section class="events section">
+	<!-- Start Breadcrumbs -->
+	<section class="breadcrumbs overlay">
 		<div class="container">
 			<div class="row">
 				<div class="col-12">
-					<div class="section-title">
-						<h2>Recommended
-							<span>Courses</span>
-						</h2>
-						<p>Look around gorgeous classes that we prepared for you. Choose what to learn & to be expert about it.</p>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-12">
-					<div class="event-slider">
-						<!-- Single Event -->
-						<div class="single-event">
-							<div class="head overlay">
-								<img src="./images/lecture1_scratch.png" alt="#">
-							</div>
-							<div class="event-content">
-								<div class="meta">
-									<span>
-										<i class="fa fa-clock-o"></i>2주 과정</span>
-									<span>
-										<i class="fa fa-list"></i>초급자 추천</span>
-								</div>
-								<h4>
-									<a href="course-block.html">생활코딩의 스크래치 강의</a>
-								</h4>
-								<p>You’ll learn the skills and techniques used by shopping mall develope teams at the most advanced online shopping
-									mall in the world.</p>
-								<div class="button">
-									<a href="course-block.html" class="btn">Attend Course</a>
-								</div>
-							</div>
-						</div>
-						<!-- Single Event -->
-						<div class="single-event">
-							<div class="head overlay">
-								<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Node.js_logo.svg/1200px-Node.js_logo.svg.png" width="800"
-								 height="550" alt="#"> </div>
-							<div class="event-content">
-								<div class="meta">
-									<span>
-										<i class="fa fa-clock-o"></i>4주 과정 </span>
-									<span>
-										<i class="fa fa-list"></i>중급자 추천</span>
-								</div>
-								<h4>
-									<a href="course-code.html">생활코딩 자바스크립트 강의</a>
-								</h4>
-								<p>이 수업은 JavaScript라는 언어의 문법 수업입니다. 
-									코딩이 처음인 분에게는 문법 중심으로 진행되는 수업이 지루하게 느껴질 수 있습니다. 
-									그래서 생활코딩에서는 해결하고 싶은 문제를 중심으로 그 문제를 해결하는데 필요한 문법을 맥락적으로 챙겨드리는 수업을 준비했습니다. 
-									이 수업을 먼저 보실 것을 권해드립니다. </p>
-								<div class="button">
-									<a href="course-code.html" class="btn">Attend Course</a>
-								</div>
-							</div>
-						</div>
-						<!--/ End Single Event -->
-						<!-- Single Event -->
-						<div class="single-event">
-							<div class="head overlay">
-								<img src="https://www.pmvmiddleeast.com/sites/default/files/pmv/styles/full_img/public/images/2018/01/31/Ford-autonomous-web_0.jpg?itok=w537nhKz"
-								 alt="#"> </div>
-							<div class="event-content">
-								<div class="meta">
-									<span>
-										<i class="fa fa-clock-o"></i>6 months</span>
-									<span>
-										<i class="fa fa-list"></i>Expert</span>
-								</div>
-								<div class="title">
-									<h4>
-										<a href="course-single.html">Making own Self-Driving Cars</a>
-									</h4>
-									<p>You’ll learn the skills and techniques used by self-driving car teams at the most advanced technology companies
-										in the world.</p>
-								</div>
-								<div class="button">
-									<a href="course-single.html" class="btn">Attend Course</a>
-								</div>
-							</div>
-						</div>
-						<!--/ End Single Event -->
-					</div>
+					<h2>Course Pages</h2>
+					<ul class="bread-list">
+						<li>
+							<a href="index.html">Home
+								<i class="fa fa-angle-right"></i>
+							</a>
+						</li>
+						<li class="active">
+							<a href="course-single.html">Course Single</a>
+						</li>
+					</ul>
 				</div>
 			</div>
 		</div>
 	</section>
-	<!--/ End Events -->
+	<!--/ End Breadcrumbs -->
 
-	<!-- Fun Facts -->
-	<div class="fun-facts overlay" data-stellar-background-ratio="0.5">
+	<!-- Courses -->
+	<section class="courses single section">
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-3 col-md-6 col-6">
-					<!-- Single Fact -->
-					<div class="single-fact">
-						<i class="fa fa-institution"></i>
-						<div class="number">
-							<span class="counter">80</span>k+</div>
-						<p>Active Cources</p>
+				<div class="col-12">
+					<div class="single-main">
+						<div class="row">
+							<div class="col-lg-8 col-12">
+								<!-- Single Course -->
+								<div class="single-course">
+									<div class="embed-responsive embed-responsive-16by9">
+											<iframe width="560" height="315" src="https://www.youtube.com/embed/zRXb8sLpETg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+									</div>
+								</div>
+								<!--/ End Single Course -->
+							</div>
+							<div class="col-lg-4 col-12">
+								<!-- Course Features -->
+								<div class="course-feature">
+									<div class="feature-main">
+										<h4>Course Features</h4>
+										<!-- Single Feature -->
+										<div class="single-feature">
+											<i class="fa fa-files-o"></i>
+											<span class="label">Lectures</span>
+											<span class="value">50</span>
+										</div>
+										<!--/ End Single Feature -->
+										<!-- Single Feature -->
+										<div class="single-feature">
+											<i class="fa fa-puzzle-piece"></i>
+											<span class="label">Quizzes</span>
+											<span class="value">5</span>
+										</div>
+										<!--/ End Single Feature -->
+										<!-- Single Feature -->
+										<div class="single-feature">
+											<i class="fa fa-clock-o"></i>
+											<span class="label">Duration</span>
+											<span class="value">6 Months</span>
+										</div>
+										<!--/ End Single Feature -->
+										<!-- Single Feature -->
+										<div class="single-feature">
+											<i class="fa fa-magic"></i>
+											<span class="label">Skill Level</span>
+											<span class="value">Beginner</span>
+										</div>
+										<!--/ End Single Feature -->
+										<!-- Single Feature -->
+										<div class="single-feature">
+											<i class="fa fa-user"></i>
+											<span class="label">Students</span>
+											<span class="value">50</span>
+										</div>
+										<!--/ End Single Feature -->
+										<!-- Single Feature -->
+										<div class="single-feature">
+											<i class="fa fa-check-square-o"></i>
+											<span class="label">Certificate</span>
+											<span class="value">No</span>
+										</div>
+										<!--/ End Single Feature -->
+										<!-- Single Feature -->
+										<div class="single-feature">
+											<i class="fa fa-check-square-o"></i>
+											<span class="label">Assessments</span>
+											<span class="value">Yes</span>
+										</div>
+										<!--/ End Single Feature -->
+									</div>
+								</div>
+								<!--/ End Course Features -->
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-12">
+								<!-- Course Meta -->
+								<div class="course-meta">
+									<!-- Course Info -->
+									<div class="course-info">
+										<div class="single-info author">
+											<h4>Teacher:
+												<a href="#">
+													<span>JinGyu Choi</span>
+												</a>
+											</h4>
+										</div>
+										<div class="single-info category">
+											<i class="fa fa-bolt"></i>
+											<h4>Category
+												<a href="#">
+													<span>Applications</span>
+												</a>
+											</h4>
+										</div>
+										<div class="single-info s-enroll">
+											<i class="fa fa-users"></i>
+											<h4>Enrolled:
+												<span>36 Student Enrolled</span>
+											</h4>
+										</div>
+										<div class="single-info rattings">
+											<i class="fa fa-clock-o"></i>
+											<h4>Course Time:
+												<span>6 months</span>
+											</h4>
+										</div>
+									</div>
+									<!--/ End Course Info -->
+									<!-- Course Price -->
+									<div class="course-price">
+										<p>무료</p>
+										<a href="../block" class="btn">
+											<i class="fa fa-users"></i>지금 들으러 가기</a>
+									</div>
+									<!--/ End Course Price -->
+								</div>
+								<!--/ End Course Meta -->
+							</div>
+							<div class="col-12">
+								<div class="content">
+									<h2>
+										<a href="#">생활 코딩의 스크래치 강좌</a>
+									</h2>
+									<p>본 강좌는 스크래치를 이용하는데 사용되는 강의 입니다. </p>
+									<p>본 수업에서는 강의를 제공하지 않습니다.
+										패스파인더 출품작으로 현재는 예시로 데이터를 넣었습니다
+										수상했으면 좋겠습니다 하하. </p>
+								</div>
+							</div>
+							<div class="col-12">
+								<div class="course-required">
+									<h4>수업 목차</h4>
+									<ul>
+										<li>
+											<span>01</span>서버측 자바스크립트와 node js 소개</li>
+										<li> 
+											<span>02</span>nodejs 설치 및 실행</li>
+										<li>
+											<span>03</span>간단한 웹 어플리케이션 만들기</li>
+										<li>
+											<span>04</span>모듈과 npm</li>
+										<li>
+											<span>05</span>콜백(callback)함수...</li>
+									</ul>
+								</div>
+								<div id="sample">
+									<img src="images/Online_Store.png" alt="#">
+									<div id="myDiagramDiv_serpentine" style="border: solid 1px white; width:70%; height:300px; margin:auto;"></div>
+								</div>
+							</div>
+						</div>
 					</div>
-					<!--/ End Single Fact -->
-				</div>
-				<div class="col-lg-3 col-md-6 col-6">
-					<!-- Single Fact -->
-					<div class="single-fact">
-						<i class="fa fa-graduation-cap"></i>
-						<div class="number">
-							<span class="counter">33</span>k+</div>
-						<p>Active Students</p>
-					</div>
-					<!--/ End Single Fact -->
-				</div>
-				<div class="col-lg-3 col-md-6 col-6">
-					<!-- Single Fact -->
-					<div class="single-fact">
-						<i class="fa fa-video-camera"></i>
-						<div class="number">
-							<span class="counter">278</span>+</div>
-						<p>Video Cources</p>
-					</div>
-					<!--/ End Single Fact -->
-				</div>
-				<div class="col-lg-3 col-md-6 col-6">
-					<!-- Single Fact -->
-					<div class="single-fact">
-						<i class="fa fa-trophy"></i>
-						<div class="number">
-							<span class="counter">308</span>+</div>
-						<p>Awards Won</p>
-					</div>
-					<!--/ End Single Fact -->
 				</div>
 			</div>
 		</div>
-	</div>
-	<!--/ End Fun Facts -->
+	</section>
+	<!--/ End Courses -->
 
 	<!-- Footer -->
 	<footer class="footer overlay section">
@@ -458,7 +449,7 @@
 								</div>
 							</div>
 						</div>
-						<!--/ End Newsletter -->
+						<<<<<<< HEAD <!--/ End Newsletter -->
 					</div>
 					<!-- End Footer -->
 				</div>
@@ -466,10 +457,89 @@
 		</div>
 	</footer>
 
+	=======
+	</div>
+	</div>
+	</div>
+	</footer>
+	<script id="code">
 
+
+		function init() {
+			// 이거필요
+			var $ = go.GraphObject.make;
+			myDiagram_serpentine =
+				$(go.Diagram, "myDiagramDiv_serpentine",  // create a Diagram for the DIV HTML element
+					{
+						initialContentAlignment: go.Spot.Center,
+						isTreePathToChildren: false,  // links go from child to parent
+						layout: $(SerpentineLayout),  // defined in SerpentineLayout.js
+						"draggingTool.dragsTree": false,  // dragging for both move and copy
+						"undoManager.isEnabled": false,  // enable undo & redo
+						"commandHandler.deletesTree": false, // for the delete command
+
+
+
+					});
+			myDiagram_serpentine.nodeTemplate =
+				$(go.Node, go.Panel.Auto,
+					$(go.Shape, { figure: "RoundedRectangle", fill: "white" },
+						new go.Binding("fill", "color")),
+					$(go.TextBlock, { margin: 4 },
+						new go.Binding("text", "key")));
+			myDiagram_serpentine.linkTemplate =
+				$(go.Link, go.Link.Orthogonal,
+					{ corner: 5 },
+					$(go.Shape),
+					$(go.Shape, { toArrow: "Standard" }));
+			var model = new go.TreeModel();
+			model.nodeParentKeyProperty = "next";
+			model.nodeDataArray = [
+				{ key: "Start", next: "Sign Up", color: "coral" },
+				{ key: "Sign Up", next: "Log-in", color: "tomato" },
+				{ key: "Log-in", next: "Product Purchasement", color: "goldenrod" },
+				{ key: "Product Purchasement", next: "Product Management", color: "orange" },
+				{ key: "Product Management", next: "Product Searching", color: "coral" },
+				{ key: "Product Searching", next: "Product Recommendations	", color: "tomato" },
+				/* { key: "Eta", next: "Theta", color: "goldenrod" },
+				{ key: "Theta", next: "Iota", color: "orange" },
+				{ key: "Iota", next: "Kappa", color: "coral" },
+				{ key: "Kappa", next: "Lambda", color: "tomato" },
+				{ key: "Lambda", next: "Mu", color: "goldenrod" },
+				{ key: "Mu", next: "Nu", color: "orange" },
+				{ key: "Nu", next: "Xi", color: "coral" },
+				{ key: "Xi", next: "Omicron", color: "tomato" },
+				{ key: "Omicron", next: "Pi", color: "goldenrod" },
+				{ key: "Pi", next: "Rho", color: "orange" },
+				{ key: "Rho", next: "Sigma", color: "coral" },
+				{ key: "Sigma", next: "Tau", color: "tomato" },
+				{ key: "Tau", next: "Upsilon", color: "goldenrod" },
+				{ key: "Upsilon", next: "Phi", color: "orange" },
+				{ key: "Phi", next: "Chi", color: "coral" },
+				{ key: "Chi", next: "Psi", color: "tomato" },
+				{ key: "Psi", next: "Omega", color: "goldenrod" },
+				{ key: "Omega", color: "orange" }*/
+			];
+			myDiagram_serpentine.model = model;
+		}
+		// 이거필요
+		function spotConverter(dir, from) {
+			if (dir === "left") {
+				return (from ? go.Spot.Left : go.Spot.Right);
+			} else {
+				return (from ? go.Spot.Right : go.Spot.Left);
+			}
+		}
+
+	</script>
+	<!-- End Footer -->
+
+	>>>>>>> ab530dfb8817d804f8f2b7df30d31390587c2df2
 	<!-- Jquery JS-->
 	<script src="js/jquery.min.js"></script>
 	<script src="js/jquery-migrate.min.js"></script>
+	<script src="go.js"></script>
+	<script src="SerpentineLayout.js"></script>
 	<!-- Popper JS-->
 	<script src="js/popper.min.js"></script>
 	<!-- Bootstrap JS-->

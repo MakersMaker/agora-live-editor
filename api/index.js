@@ -51,10 +51,9 @@ io.on('connection' , (socket)=>{
   });
 
   socket.on('blockSend', (data) =>{
-    console.log(data);
-    socket.broadcast.emit('messageRecive', data);
-  })
-
+    console.log("got block");
+    socket.broadcast.emit('blockRecive', data);
+  });
   
 });
 

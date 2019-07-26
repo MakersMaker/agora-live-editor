@@ -22,7 +22,7 @@
     }
   </style>
 </head>
-<body onload="init();">
+<body>
   <p>
     <button onclick="blockExecution()" id="stepButton">블록 프로그램 실행</button>
     <button onclick="jsExecution()" id="jsButton">Javascript 프로그램 실행</button>
@@ -131,7 +131,10 @@
   <script>
     const socket = io();
     socket.emit("connection");
-    //socket.on('')
+    socket.on('blockRecive', (data) => {
+      console.log("recive");
+    });
+
     var demoWorkspace = Blockly.inject('blocklyDiv',
         {media: 'media/',
          toolbox: document.getElementById('toolbox')});
@@ -276,7 +279,8 @@
       Blockly.JavaScript.addReservedWords('highlightBlock');
       latestCode = Blockly.JavaScript.workspaceToCode(demoWorkspace);
       resetStepUi(true);
-      console.log(prettyXMLText);
+      //console.log(prettyXMLText);
+      console.log("changed");
       socket.emit('blockSend', {data: prettyXMLText});
     }
 

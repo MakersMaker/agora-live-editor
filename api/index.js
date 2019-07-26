@@ -7,6 +7,7 @@ const fs = require('fs');
 const https = require('https');
 const http = require('http');
 const Webrtcserver = require('./public/js/websocket')
+const nodeCmd = require('node-cmd');
 
 const config = {
   filesPath: './public/files'
@@ -27,7 +28,6 @@ app.set('views', __dirname +  '/public');
 app.engine('html', require('ejs').renderFile);
 app.set('view engine','html');
 
-var httpPort = 8082;
 var httpsPort = 8081;
 
 const server = https.createServer(options,app).listen(httpsPort, (req,res) =>{
@@ -67,8 +67,7 @@ app.post('/files', (req, res) => {
   });
 });
 
-app.get('/lecturePage' , (req,res)=>{
-  
+app.get('/lecturePage' , (req,res)=>{  
   res.render('lecturePage.html');
 })
 
@@ -77,6 +76,35 @@ app.get('/hello',(req,res)=>{
   res.render('hello.html');
 })
 
+app.post('/compile', (req,res)=>{
+  const fileName = req.body.fileName;
+  const filePath = path.join(config.filesPath, fileName);
+  const extend = fileName.split('.')[1];
+  if(extend == 'py'){
+    nodeCmd.get('python ' + filePath + "> output.txt", (err,data, stderr) =>{
+       fs.readFile('output.txt', 'utf8', (err,data)=>{
+         console.log(data);
+         var resJson = JSON.stringify({
+            'output' : data
+         })
+         res.send(resJson)
+       })
+    });
+  }
+  else if(extend =='js') {
+    nodeCmd.get('node ' + filePath + "> output.txt", (err,data, stderr) =>{
+      fs.readFile('output.txt', 'utf8', (err,data)=>{
+        console.log(data);
+        var resJson = JSON.stringify({
+           'output' : data
+        })
+        res.send(resJson)
+      })
+    });
+  }
+  
+  
+})
 
 function getFileTree(dir) {
   return dirTree(dir);

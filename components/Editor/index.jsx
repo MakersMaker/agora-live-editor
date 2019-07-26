@@ -11,7 +11,7 @@ export default class Editor extends React.Component {
   state = {
     content: '// type your code... \n',
     language: 'javascript',
-    theme: 'vs-dark',
+    theme: 'default',
     file: {
       name: '',
     },

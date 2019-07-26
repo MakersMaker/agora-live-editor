@@ -13,6 +13,5 @@ export const style = {
   },
   wrapconsole: {
     height: 'calc(20vh)',
-    background : '#fbc'
   }
 }

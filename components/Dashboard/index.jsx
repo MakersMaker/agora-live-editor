@@ -6,7 +6,7 @@ import Content from '../Content';
 
 export default class Dashboard extends React.Component {
   state = {
-    activeFileName: 'sample.json',
+    activeFileName: 'test.json',
   }
 
   render() {

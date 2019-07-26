@@ -7,7 +7,7 @@ import Button from '@material-ui/core/Button';
 
 export default class App extends React.Component {
     state = {
-        activeFileName : 'sample.json'
+        activeFileName : 'test.js'
     };
 
   render() {

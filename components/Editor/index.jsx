@@ -7,6 +7,7 @@ import { server } from '../config';
 import { style } from '../config';
 import io from 'socket.io-client';
 import { Button } from '@material-ui/core';
+import './styles.css'
 import axios from 'axios';
 
 export default class Editor extends React.Component {
@@ -38,8 +39,10 @@ export default class Editor extends React.Component {
       </Paper>
       <Paper elevation={1}>
         <div style={style.wrapconsole}>
-          <input type="button" value="버튼" onClick={this.testCompile}/><br/>
-          코드결과값<br/>
+          <span className ="leftComponent">코드결과값</span>
+          <input type="button" value="컴파일" onClick={this.testCompile} className="rightComponent"/><br/>
+
+          <div className="rowLine"></div>
           {this.state.result}
         </div>
       </Paper>

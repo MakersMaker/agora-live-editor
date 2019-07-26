@@ -7,7 +7,7 @@ import Editor from '../Editor';
 
 export default class Content extends React.Component {
   state = {
-    file: { name: 'sample.json', activeTab: 0 },
+    file: { name: 'test.js', activeTab: 0 },
   }
   render() {
     const fileName = this.parseFileName(this.props.activeFileName);

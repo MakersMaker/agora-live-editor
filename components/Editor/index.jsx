@@ -11,6 +11,7 @@ export default class Editor extends React.Component {
   state = {
     content: '// type your code... \n',
     language: 'javascript',
+    theme: 'vs-dark',
     file: {
       name: '',
     },
@@ -35,7 +36,8 @@ export default class Editor extends React.Component {
     this.editor = monaco.editor.create(this.editorDOM.current, {
       value: this.state.content,
       language: this.state.language,
-      automaticLayout: true
+      automaticLayout: true,
+      theme: this.state.theme
     });
     this.switchFile(this.state.file.name);
     this.registerContentListener(this.editor);

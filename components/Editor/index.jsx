@@ -18,6 +18,7 @@ export default class Editor extends React.Component {
       name: '',
     },
     result: '',
+    sourceCode : '',
   }
 
   socket  = io();
@@ -37,7 +38,7 @@ export default class Editor extends React.Component {
       </Paper>
       <Paper elevation={1}>
         <div style={style.wrapconsole}>
-          <input type="button" value="버튼" onClick={()=>{this.test1();}}/><br/>
+          <input type="button" value="버튼" onClick={this.testCompile}/><br/>
           코드결과값<br/>
           {this.state.result}
         </div>
@@ -48,12 +49,22 @@ export default class Editor extends React.Component {
     ;
   }
 
-  test1(){
-    this.setState({
-      result : '하이'
-    });
-  };
-  
+  testCompile=()=>{
+    let data = this.editor.getModel().getValue();
+    console.log(data);
+    
+  axios({
+          url: 'https://localhost:8081/compile',
+          method: 'post',
+          data: {
+            fileName: this.state.file.name,
+            fileContent : data
+          },
+          validateStatus:false
+        }).then((res)=>{
+          this.setState({result : res.data.output})
+        });
+  }
 
   componentDidMount() {
     this.editor = monaco.editor.create(this.editorDOM.current, {
@@ -98,9 +109,10 @@ export default class Editor extends React.Component {
       const content = editor.getModel().getValue();
       this.updateFile(this.state.file.name, content);
       this.broadcastFile(this.state.file.name, content);
+      this.setState()
     }
 
-    window.onkeyup = debounce(typing, 500);
+    window.onkeyup = debounce(typing, 100);
   }
 
   async updateFile(fileName, content) {

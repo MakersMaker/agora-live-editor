@@ -71,37 +71,43 @@ app.get('/lecturePage' , (req,res)=>{
   res.render('lecturePage.html');
 })
 
-app.get('/hello',(req,res)=>{
-  res.set({'{Content-Type' : 'text/html;'});
+app.get('/hellos',(req,res)=>{
   res.render('hello.html');
 })
+
 
 app.post('/compile', (req,res)=>{
   console.log('hi')
   const fileName = req.body.fileName;
+  const fileContent = req.body.fileContent;
   const filePath = path.join(config.filesPath, fileName);
   const extend = fileName.split('.')[1];
   if(extend == 'py'){
-    nodeCmd.get('python ' + filePath + "> output.txt", (err,data, stderr) =>{
-       fs.readFile('output.txt', 'utf8', (err,data)=>{
-         console.log(data);
-         var resJson = JSON.stringify({
-            'output' : data
-         })
-         res.send(resJson)
-       })
-    });
+    fs.writeFile('output.txt',fileContent,'utf8',(err,)=>{
+      nodeCmd.get('python ' + filePath + "> output.txt", (err,data, stderr) =>{
+        fs.readFile('output.txt', 'utf8', (err,data)=>{
+          console.log(data);
+          var resJson = JSON.stringify({
+             'output' : data
+          })
+          res.send(resJson)
+        })
+     });
+    })
+    
   }
   else if(extend =='js') {
-    nodeCmd.get('node ' + filePath + "> output.txt", (err,data, stderr) =>{
-      fs.readFile('output.txt', 'utf8', (err,data)=>{
-        console.log(data);
-        var resJson = JSON.stringify({
-           'output' : data
+    fs.writeFile('output.txt',fileContent,'utf8',(err,)=>{
+      nodeCmd.get('node ' + filePath + "> output.txt", (err,data, stderr) =>{
+        fs.readFile('output.txt', 'utf8', (err,data)=>{
+          console.log(data);
+          var resJson = JSON.stringify({
+             'output' : data
+          })
+          res.send(resJson)
         })
-        res.send(resJson)
-      })
-    });
+     });
+    })
   }
   
   

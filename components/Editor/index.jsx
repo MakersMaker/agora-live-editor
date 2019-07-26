@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React,{Component} from 'react';
 import Paper from '@material-ui/core/Paper';
 import * as monaco from 'monaco-editor';
 import debounce from 'debounce';
@@ -6,6 +6,7 @@ import { extname } from 'path';
 import { server } from '../config';
 import { style } from '../config';
 import io from 'socket.io-client';
+import { Button } from '@material-ui/core';
 
 export default class Editor extends React.Component {
   state = {
@@ -15,6 +16,7 @@ export default class Editor extends React.Component {
     file: {
       name: '',
     },
+    result: '',
   }
 
   socket  = io();
@@ -27,10 +29,29 @@ export default class Editor extends React.Component {
   }
 
   render() {
-    return <Paper elevation={1}>
-      <div style={ style.page } ref={ this.editorDOM }></div>
-    </Paper>;
+    return (
+    <div>
+      <Paper elevation={1}>
+        <div style={ style.page } ref={ this.editorDOM }></div>
+      </Paper>
+      <Paper elevation={1}>
+        <div style={style.wrapconsole}>
+          <input type="button" value="버튼" onClick={()=>{this.test1();}}/><br/>
+          코드결과값<br/>
+          {this.state.result}
+        </div>
+      </Paper>
+    
+    </div>
+    )
+    ;
   }
+
+  test1(){
+    this.setState({
+      result : '하이'
+    });
+  };
 
   componentDidMount() {
     this.editor = monaco.editor.create(this.editorDOM.current, {

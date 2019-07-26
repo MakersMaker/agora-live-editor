@@ -1,3 +1,5 @@
+import color from "@material-ui/core/colors/yellow";
+
 const port = process.env.PORT || 8081;
 
 export const server = {
@@ -7,6 +9,10 @@ export const server = {
 
 export const style = {
   page: {
-    height: 'calc(100vh - 48px)'
+    height: 'calc(80vh - 48px)'
+  },
+  wrapconsole: {
+    height: 'calc(20vh)',
+    background : '#fbc'
   }
 }

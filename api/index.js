@@ -67,13 +67,21 @@ app.post('/files', (req, res) => {
   });
 });
 
-app.get('/lecturePage' , (req,res)=>{  
-  res.render('lecturePage.html');
+app.get('/code' , (req,res)=>{  
+  res.render('code.html');
+})
+
+app.get('/block' , (req,res)=>{  
+  res.render('block.html');
 })
 
 app.get('/hello',(req,res)=>{
   res.set({'{Content-Type' : 'text/html;'});
   res.render('hello.html');
+})
+
+app.get('/blockcode', (req, res) =>{
+  res.render('block_executor.html')
 })
 
 app.post('/compile', (req,res)=>{
